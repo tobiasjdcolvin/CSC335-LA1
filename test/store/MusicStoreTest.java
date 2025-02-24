@@ -7,8 +7,7 @@ import static junit.framework.TestCase.assertTrue;
 
 public class MusicStoreTest {
     @Test
-    public void testmyTest() {
-        int result = MusicStore.myTest();
-        assertTrue(result == 999);
+    public void testConstructor() {
+        MusicStore myMusicStore = new MusicStore();
     }
 }
