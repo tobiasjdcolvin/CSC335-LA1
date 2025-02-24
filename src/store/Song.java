@@ -6,16 +6,21 @@ public class Song {
     private final String album;
     private int rating;
 
+    /* Constructors */
     public Song(String title, String artist, String album) {
         this.title = title;
         this.artist = artist;
         this.album = album;
         this.rating = 0;
     }
+    public Song(Song song) {
+        this.title = song.getTitle();
+        this.artist = song.getArtist();
+        this.rating = song.getRating();
+        this.album = song.getAlbum();
+    }
 
-    /*
-        Takes input integer between 1-5
-     */
+    /* Takes input integer between 1-5 */
     public void setRating(int rating) {
         this.rating = rating;
     }
@@ -30,5 +35,11 @@ public class Song {
     public String getAlbum() {return this.album;}
     public int getRating() {
         return this.rating;
+    }
+
+    /* Overrides */
+    @Override
+    public String toString() {
+        return this.title + " - " + this.artist;
     }
 }
