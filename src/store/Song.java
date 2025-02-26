@@ -5,6 +5,7 @@ public class Song {
     private final String artist;
     private final String album;
     private int rating;
+    private boolean favorite;
 
     /* Constructors */
     public Song(String title, String artist, String album) {
@@ -12,12 +13,18 @@ public class Song {
         this.artist = artist;
         this.album = album;
         this.rating = 0;
+        this.favorite = false;
     }
     public Song(Song song) {
         this.title = song.getTitle();
         this.artist = song.getArtist();
         this.rating = song.getRating();
         this.album = song.getAlbum();
+        this.favorite = song.getFavorite();
+    }
+
+    private boolean getFavorite() {
+        return this.favorite;
     }
 
     /* Takes input integer between 1-5 */

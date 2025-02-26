@@ -3,9 +3,9 @@ package src.model;
 import src.store.Album;
 import src.store.MusicStore;
 import src.store.Song;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class LibraryModel {
     private MusicStore store;
@@ -15,8 +15,10 @@ public class LibraryModel {
     private HashMap<String, ArrayList<Album>> albumsByTitle;
     private HashMap<String, ArrayList<Album>> albumsByArtist;
 
-    // list of playlists:
+    // playlists:
     private HashMap<String, Playlist> playlists;
+    // favorite songs:
+    private ArrayList<Song> favorites;
 
     // constructor:
     public LibraryModel(MusicStore store) {
@@ -28,6 +30,7 @@ public class LibraryModel {
         this.albumsByArtist = new HashMap<String, ArrayList<Album>>();
 
         this.playlists = new HashMap<String, Playlist>();
+        this.favorites = new ArrayList<Song>();
     }
 
 
@@ -109,5 +112,51 @@ public class LibraryModel {
 
         // returns true if found and false if null
         return (found != null);
+    }
+
+    /* "get a list of items from the library" - from the spec */
+    // get a 'list' of song titles:
+    public ArrayList<String> getSongTitles() {
+        ArrayList<String> returnLst = new ArrayList<String>();
+        for (String title : songsByTitle.keySet()) {
+            returnLst.add(title);
+        }
+        return returnLst;
+    }
+
+    // get a 'list' of artists
+    public ArrayList<String> getArtists() {
+        ArrayList<String> returnLst = new ArrayList<String>();
+        for (String artist : songsByArtist.keySet()) {
+            returnLst.add(artist);
+        }
+        return returnLst;
+    }
+
+    // get a 'list' of albums names
+    public ArrayList<String> getAlbums() {
+        ArrayList<String> returnLst = new ArrayList<String>();
+        for (String album : albumsByTitle.keySet()) {
+            returnLst.add(album);
+        }
+        return returnLst;
+    }
+
+    // get a list of playlists
+    public ArrayList<String> getPlaylists() {
+        ArrayList<String> returnLst = new ArrayList<String>();
+        for (String playlistName : playlists.keySet()) {
+            returnLst.add(playlistName);
+        }
+        return returnLst;
+    }
+
+    // get a list of favorite songs
+    public ArrayList<String> getFavorites() {
+        ArrayList<String> returnLst = new ArrayList<String>();
+        for (Song song : favorites) {
+            returnLst.add(song.getTitle());
+        }
+        return returnLst;
     }
 }
