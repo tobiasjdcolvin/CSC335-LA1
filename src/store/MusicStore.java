@@ -5,9 +5,14 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class MusicStore {
+    // We chose to utilize hashmaps for storing the data, because
+    // access via keys should be O(1).
     private HashMap<String, Song> songsByTitle;
     // must have a nested ArrayList, since an artist can have multiple songs
     private HashMap<String, ArrayList<Song>> songsByArtist;
+    private HashMap<String, Album> albumsByTitle;
+    // must have a nested ArrayList, since an artist can have multiple albums
+    private HashMap<String, ArrayList<Album>> albumsByArtist;
 
     private ArrayList<String> albumFiles;
 
@@ -15,6 +20,8 @@ public class MusicStore {
     public MusicStore() {
         this.songsByTitle = new HashMap<String, Song>();
         this.songsByArtist = new HashMap<String, ArrayList<Song>>();
+        this.albumsByTitle = new HashMap<String, Album>();
+        this.albumsByArtist = new HashMap<String, ArrayList<Album>>();
 
         try {
             BufferedReader bReader = new BufferedReader(new FileReader("src/albums/albums.txt"));
@@ -47,12 +54,26 @@ public class MusicStore {
                     String currAlbumTitle = splitLine[0];
                     String currArtistName = splitLine[1];
 
+                    // create an Album object to then use for the album related hashmaps
+                    Album currAlbum = new Album(currAlbumTitle, currArtistName);
+
+                    // put initial info into album hashmaps
+                    if (!this.albumsByTitle.containsKey(currAlbumTitle)) {
+                        this.albumsByTitle.put(currAlbumTitle, currAlbum);
+                    }
+                    if (!this.albumsByArtist.containsKey(currArtistName)) {
+                        this.albumsByArtist.put(currArtistName, new ArrayList<>());
+                    }
+                    this.albumsByArtist.get(currArtistName).add(currAlbum);
+
                     while ((currLine = bReader.readLine()) != null) {
                         currLine = currLine.toLowerCase();
                         // each of these lines are songs, so for each song:
                         // first create a new song object for each song
                         // note: currLine is the title of the current song
                         Song currSong = new Song(currLine, currArtistName, currAlbumTitle);
+                        // add the current song to the album object
+                        currAlbum.addSong(currSong);
                         // populate songsByTitle (song titles as keys, Song objs as vals):
                         this.songsByTitle.put(currLine, currSong);
                         // check whether the artist already exists in the
@@ -87,6 +108,26 @@ public class MusicStore {
         artistName = artistName.toLowerCase();
         if (songsByArtist.containsKey(artistName)) {
             return songsByArtist.get(artistName);
+        } else {
+            return null;
+        }
+    }
+
+    // returns an Album object if found, null if not
+    public Album getAlbumByTitle(String albumTitle) {
+        albumTitle = albumTitle.toLowerCase();
+        if (albumsByTitle.containsKey(albumTitle)) {
+            return albumsByTitle.get(albumTitle);
+        } else {
+            return null;
+        }
+    }
+
+    // returns an ArrayList of Album objects if found, null if not
+    public ArrayList<Album> getAlbumsByArtist(String artistName) {
+        artistName = artistName.toLowerCase();
+        if (albumsByArtist.containsKey(artistName)) {
+            return albumsByArtist.get(artistName);
         } else {
             return null;
         }
