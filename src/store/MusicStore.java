@@ -7,20 +7,18 @@ import java.util.ArrayList;
 public class MusicStore {
     // We chose to utilize hashmaps for storing the data, because
     // access via keys should be O(1).
-    private HashMap<String, Song> songsByTitle;
-    // must have a nested ArrayList, since an artist can have multiple songs
+    private HashMap<String, ArrayList<Song>> songsByTitle;
     private HashMap<String, ArrayList<Song>> songsByArtist;
-    private HashMap<String, Album> albumsByTitle;
-    // must have a nested ArrayList, since an artist can have multiple albums
+    private HashMap<String, ArrayList<Album>> albumsByTitle;
     private HashMap<String, ArrayList<Album>> albumsByArtist;
 
     private ArrayList<String> albumFiles;
 
     // constructor
     public MusicStore() {
-        this.songsByTitle = new HashMap<String, Song>();
+        this.songsByTitle = new HashMap<String, ArrayList<Song>>();
         this.songsByArtist = new HashMap<String, ArrayList<Song>>();
-        this.albumsByTitle = new HashMap<String, Album>();
+        this.albumsByTitle = new HashMap<String, ArrayList<Album>>();
         this.albumsByArtist = new HashMap<String, ArrayList<Album>>();
 
         try {
@@ -59,11 +57,12 @@ public class MusicStore {
 
                     // put initial info into album hashmaps
                     if (!this.albumsByTitle.containsKey(currAlbumTitle)) {
-                        this.albumsByTitle.put(currAlbumTitle, currAlbum);
+                        this.albumsByTitle.put(currAlbumTitle, new ArrayList<Album>());
                     }
                     if (!this.albumsByArtist.containsKey(currArtistName)) {
-                        this.albumsByArtist.put(currArtistName, new ArrayList<>());
+                        this.albumsByArtist.put(currArtistName, new ArrayList<Album>());
                     }
+                    this.albumsByTitle.get(currAlbumTitle).add(currAlbum);
                     this.albumsByArtist.get(currArtistName).add(currAlbum);
 
                     while ((currLine = bReader.readLine()) != null) {
@@ -74,8 +73,11 @@ public class MusicStore {
                         Song currSong = new Song(currLine, currArtistName, currAlbumTitle);
                         // add the current song to the album object
                         currAlbum.addSong(currSong);
-                        // populate songsByTitle (song titles as keys, Song objs as vals):
-                        this.songsByTitle.put(currLine, currSong);
+                        // populate songsByTitle (song titles as keys, ArrayLists of Song objs as vals):
+                        if (!this.songsByTitle.containsKey(currLine)) {
+                            this.songsByTitle.put(currLine, new ArrayList<Song>());
+                        }
+                        this.songsByTitle.get(currLine).add(currSong);
                         // check whether the artist already exists in the
                         // songsByArtist hashmap,
                         // if they do, append to the list of their songs and if not,
@@ -93,8 +95,8 @@ public class MusicStore {
         }
     }
 
-    // returns a Song object if found, null if not
-    public Song getSongByTitle(String songTitle) {
+    // returns an ArrayList of Song objects if found, null if not
+    public ArrayList<Song> getSongsByTitle(String songTitle) {
         songTitle = songTitle.toLowerCase();
         if (songsByTitle.containsKey(songTitle)) {
             return songsByTitle.get(songTitle);
@@ -113,8 +115,8 @@ public class MusicStore {
         }
     }
 
-    // returns an Album object if found, null if not
-    public Album getAlbumByTitle(String albumTitle) {
+    // returns an ArrayList of Album objects if found, null if not
+    public ArrayList<Album> getAlbumsByTitle(String albumTitle) {
         albumTitle = albumTitle.toLowerCase();
         if (albumsByTitle.containsKey(albumTitle)) {
             return albumsByTitle.get(albumTitle);
