@@ -47,6 +47,6 @@ public class Song {
     /* Overrides */
     @Override
     public String toString() {
-        return this.title + " - " + this.artist;
+        return this.title + " - " + this.artist + " - " + this.album;
     }
 }

@@ -5,7 +5,6 @@ import src.store.MusicStore;
 import src.store.Song;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 public class LibraryModel {
     private MusicStore store;
@@ -34,53 +33,122 @@ public class LibraryModel {
     }
 
 
-    // returns an ArrayList of Song objects if found, null if not
-    public ArrayList<Song> getSongsByTitle(String songTitle) {
+    // returns an ArrayList of song info if found, empty ArrayList if not
+    public ArrayList<String> getSongsByTitle(String songTitle) {
         songTitle = songTitle.toLowerCase();
+        ArrayList<String> songInfo = new ArrayList<String>();
+
         if (songsByTitle.containsKey(songTitle)) {
-            return songsByTitle.get(songTitle);
-        } else {
-            return null;
+            for (Song song : songsByTitle.get(songTitle)) {
+                songInfo.add(song.toString());
+            }
         }
+
+        return songInfo;
     }
 
-    // returns an ArrayList of Song objects if found, null if not
-    public ArrayList<Song> getSongsByArtist(String artistName) {
+    // returns an ArrayList of song info if found, empty ArrayList if not
+    public ArrayList<String> getSongsByTitleFromStore(String songTitle) {
+        songTitle = songTitle.toLowerCase();
+        ArrayList<String> songInfo = new ArrayList<String>();
+
+        ArrayList<Song> songs = store.getSongsByTitle(songTitle);
+        for (Song song: songs) {
+            songInfo.add(song.toString());
+        }
+
+        return songInfo;
+
+    }
+
+    // returns an ArrayList of song info if found, empty ArrayList if not
+    public ArrayList<String> getSongsByArtist(String artistName) {
         artistName = artistName.toLowerCase();
+        ArrayList<String> songInfo = new ArrayList<String>();
+
         if (songsByArtist.containsKey(artistName)) {
-            return songsByArtist.get(artistName);
-        } else {
-            return null;
+            for (Song song : songsByArtist.get(artistName)) {
+                songInfo.add(song.toString());
+            }
         }
+
+        return songInfo;
     }
 
-    // returns an ArrayList of Album objects if found, null if not
-    public ArrayList<Album> getAlbumsByTitle(String albumTitle) {
-        albumTitle = albumTitle.toLowerCase();
-        if (albumsByTitle.containsKey(albumTitle)) {
-            return albumsByTitle.get(albumTitle);
-        } else {
-            return null;
-        }
-    }
-
-    // returns an ArrayList of Album objects if found, null if not
-    public ArrayList<Album> getAlbumsByArtist(String artistName) {
+    // returns an ArrayList of song info if found, empty ArrayList if not
+    public ArrayList<String> getSongsByArtistFromStore(String artistName) {
         artistName = artistName.toLowerCase();
-        if (albumsByArtist.containsKey(artistName)) {
-            return albumsByArtist.get(artistName);
-        } else {
-            return null;
+        ArrayList<String> songInfo = new ArrayList<String>();
+
+        ArrayList<Song> songs = store.getSongsByArtist(artistName);
+        for (Song song: songs) {
+            songInfo.add(song.toString());
         }
+
+        return songInfo;
+    }
+
+    // returns an ArrayList of album info if found, empty ArrayList if not
+    public ArrayList<String> getAlbumsByTitle(String albumTitle) {
+        albumTitle = albumTitle.toLowerCase();
+        ArrayList<String> albumInfo = new ArrayList<String>();
+
+        if (albumsByTitle.containsKey(albumTitle)) {
+            for (Album album : albumsByTitle.get(albumTitle)) {
+                albumInfo.add(album.toString());
+            }
+        }
+
+        return albumInfo;
+    }
+
+    // returns an ArrayList of album info if found, empty ArrayList if not
+    public ArrayList<String> getAlbumsByTitleFromStore(String albumTitle) {
+        albumTitle = albumTitle.toLowerCase();
+        ArrayList<String> albumInfo = new ArrayList<String>();
+
+        ArrayList<Album> albums = store.getAlbumsByTitle(albumTitle);
+        for (Album album: albums) {
+            albumInfo.add(album.toString());
+        }
+
+        return albumInfo;
+    }
+
+    // returns an ArrayList of album info if found, empty ArrayList if not
+    public ArrayList<String> getAlbumsByArtist(String artistName) {
+        artistName = artistName.toLowerCase();
+        ArrayList<String> albumInfo = new ArrayList<String>();
+
+        if (albumsByArtist.containsKey(artistName)) {
+            for (Album album : albumsByArtist.get(artistName)) {
+                albumInfo.add(album.toString());
+            }
+        }
+
+        return albumInfo;
+    }
+
+    // returns an ArrayList of album info if found, empty ArrayList if not
+    public ArrayList<String> getAlbumsByArtistFromStore(String artistName) {
+        artistName = artistName.toLowerCase();
+        ArrayList<String> albumInfo = new ArrayList<String>();
+
+        ArrayList<Album> albums = store.getAlbumsByArtist(artistName);
+        for (Album album: albums) {
+            albumInfo.add(album.toString());
+        }
+
+        return albumInfo;
     }
 
     // search for a playlist by name,
-    // returns a Playlist object if found, null if not
-    public Playlist getPlaylistByName(String playlistName) {
+    // returns a playlist represented by string if found, empty string if not
+    public String getPlaylistByName(String playlistName) {
         if (playlists.containsKey(playlistName)) {
-            return playlists.get(playlistName);
+            return playlists.get(playlistName).toString();
         } else {
-            return null;
+            return "";
         }
     }
 

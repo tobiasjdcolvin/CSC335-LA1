@@ -15,4 +15,13 @@ public class Playlist {
     public void addSong(Song song) {
         songs.add(song);
     }
+
+    @Override
+    public String toString() {
+        String returnStr = "Playlist:" + " " + this.name + "\n";
+        for (Song s : this.songs) {
+            returnStr += s.getTitle() + " - " + s.getArtist() + "\n";
+        }
+        return returnStr;
+    }
 }
