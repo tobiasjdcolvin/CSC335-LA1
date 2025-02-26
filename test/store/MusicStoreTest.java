@@ -13,9 +13,9 @@ public class MusicStoreTest {
     MusicStore myMusicStore = new MusicStore();
 
     @Test
-    public void testGetSongByTitle() {
+    public void testGetSongsByTitle() {
         // testing with the song Clocks by Coldplay:
-        Song currSong = myMusicStore.getSongByTitle("Clocks");
+        Song currSong = myMusicStore.getSongsByTitle("Clocks").get(0);
         Assert.assertTrue(currSong != null);
         Assert.assertTrue(currSong.getTitle().equals("clocks"));
         Assert.assertTrue(currSong.getArtist().equals("coldplay"));
@@ -32,9 +32,9 @@ public class MusicStoreTest {
     }
 
     @Test
-    public void testGetAlbumByTite() {
+    public void testGetAlbumsByTite() {
         // testing with the album Begin Again by Norah Jones:
-        Album currAlbum = myMusicStore.getAlbumByTitle("Begin Again");
+        Album currAlbum = myMusicStore.getAlbumsByTitle("Begin Again").get(0);
         // TODO: actually test stuff instead of printing string
         System.out.println(currAlbum.toString());
     }
@@ -48,5 +48,13 @@ public class MusicStoreTest {
             System.out.println(a.toString());
         }
         Assert.assertEquals(2, currAlbumList.size());
+    }
+
+    @Test
+    public void testSongWithMultipleArtists(){
+        // Tests that things work when more than one artist has a song with the same name.
+        // In this case, "Lullaby" is a son by two artists: OneRepublic and Leonard Cohen.
+        ArrayList<Song> currSongList = myMusicStore.getSongsByTitle("Lullaby");
+        Assert.assertTrue(currSongList.size() == 2);
     }
 }
