@@ -24,6 +24,13 @@ public class MusicStoreTest {
     }
 
     @Test
+    public void testGetSongsByTitleWhenNotExist() {
+        // testing when the song does not exist
+        ArrayList<Song> currSongList = myMusicStore.getSongsByTitle("NotASong");
+        Assert.assertTrue(currSongList == null);
+    }
+
+    @Test
     public void testGetSongsByArtist() {
         // testing with all current songs by Adele (there are two Adele albums in the albums directory)
         ArrayList<Song> currSongList = myMusicStore.getSongsByArtist("Adele");
@@ -32,22 +39,46 @@ public class MusicStoreTest {
     }
 
     @Test
-    public void testGetAlbumsByTite() {
-        // testing with the album Begin Again by Norah Jones:
-        Album currAlbum = myMusicStore.getAlbumsByTitle("Begin Again").get(0);
-        // TODO: actually test stuff instead of printing string
-        System.out.println(currAlbum.toString());
+    public void testGetSongsByArtistWhenNotExist() {
+        // testing when the artist does not exist
+        ArrayList<Song> currSongList = myMusicStore.getSongsByArtist("NotAnArtist");
+        Assert.assertTrue(currSongList == null);
     }
 
     @Test
     public void testGetAlbumsByTitle() {
+        // testing with the album Begin Again by Norah Jones:
+        Album currAlbum = myMusicStore.getAlbumsByTitle("Begin Again").get(0);
+        Assert.assertTrue(currAlbum.getArtist().equals("norah jones"));
+    }
+
+    @Test
+    public void testGetAlbumsByTitleWhenNotExist() {
+        // testing when the album does not exist
+        ArrayList<Album> currAlbumList = myMusicStore.getAlbumsByTitle("NotAnAlbum");
+        Assert.assertTrue(currAlbumList == null);
+    }
+
+    @Test
+    public void testGetAlbumsByArtist() {
         // testing with all albums by Adele (there are two Adele albums in the albums directory)
         ArrayList<Album> currAlbumList = myMusicStore.getAlbumsByArtist("Adele");
-        // TODO: actually test stuff instead of printing string
+        String checkFor = "21";
+        boolean found = false;
         for (Album a : currAlbumList) {
-            System.out.println(a.toString());
+            if (a.getTitle().equals(checkFor)) {
+                found = true;
+            }
         }
         Assert.assertEquals(2, currAlbumList.size());
+        Assert.assertEquals(true, found);
+    }
+
+    @Test
+    public void testGetAlbumsByArtistWhenNotExist() {
+        // testing when the artist does not exist
+        ArrayList<Album> currAlbumList = myMusicStore.getAlbumsByArtist("NotAnArtist");
+        Assert.assertTrue(currAlbumList == null);
     }
 
     @Test
