@@ -1,15 +1,17 @@
 package test.model;
 
+import org.junit.Assert;
 import src.model.LibraryModel;
 import org.junit.Test;
 import src.store.MusicStore;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public class LibraryModelTest {
+    MusicStore testStore = new MusicStore();
+    LibraryModel testModel = new LibraryModel(testStore);
+
     @Test
     public void testAddToLibrary() {
-        LibraryModel l = new LibraryModel(new MusicStore());
-        assertTrue(l.addSongToLibrary("Africa", "Toto"));
+        Assert.assertTrue(testModel.addSongToLibrary("Banjo", "Leonard Cohen"));
+        Assert.assertEquals("banjo", testModel.getSongsByArtist("Leonard Cohen").get(0).getTitle());
     }
 }
