@@ -95,43 +95,43 @@ public class MusicStore {
         }
     }
 
-    // returns an ArrayList of Song objects if found, null if not
+    // returns an ArrayList of Song objects if found, empty ArrayList if not
     public ArrayList<Song> getSongsByTitle(String songTitle) {
         songTitle = songTitle.toLowerCase();
         if (songsByTitle.containsKey(songTitle)) {
             return songsByTitle.get(songTitle);
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 
-    // returns an ArrayList of Song objects if found, null if not
+    // returns an ArrayList of Song objects if found, empty ArrayList if not
     public ArrayList<Song> getSongsByArtist(String artistName) {
         artistName = artistName.toLowerCase();
         if (songsByArtist.containsKey(artistName)) {
             return songsByArtist.get(artistName);
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 
-    // returns an ArrayList of Album objects if found, null if not
+    // returns an ArrayList of Album objects if found, empty ArrayList if not
     public ArrayList<Album> getAlbumsByTitle(String albumTitle) {
         albumTitle = albumTitle.toLowerCase();
         if (albumsByTitle.containsKey(albumTitle)) {
             return albumsByTitle.get(albumTitle);
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 
-    // returns an ArrayList of Album objects if found, null if not
+    // returns an ArrayList of Album objects if found, empty ArrayList if not
     public ArrayList<Album> getAlbumsByArtist(String artistName) {
         artistName = artistName.toLowerCase();
         if (albumsByArtist.containsKey(artistName)) {
             return albumsByArtist.get(artistName);
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 }
