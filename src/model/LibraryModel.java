@@ -85,6 +85,14 @@ public class LibraryModel {
     public boolean addSongToLibrary(String songName, String artistName) {
         // TODO: get songs by artistName and compare them to songs of songName to find the correct song in the store.
         // Once found, add the song to the library (update all of the hashmaps accordingly).
-        return false;
+        // TODO: Currently Song class requires an album name, we will have to collaborate on how to handle this
+        Song song = new Song(songName, artistName, "");
+        if(!songsByArtist.containsKey(artistName)) {
+            songsByArtist.put(artistName, new ArrayList<Song>());
+        } songsByArtist.get(artistName).add(song);
+        if(!songsByTitle.containsKey(songName)) {
+            songsByTitle.put(songName, new ArrayList<Song>());
+        } songsByTitle.get(songName).add(song);
+        return true;
     }
 }
