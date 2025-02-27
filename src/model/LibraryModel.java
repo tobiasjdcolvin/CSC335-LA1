@@ -260,4 +260,48 @@ public class LibraryModel {
         // returns true if found and false if null
         return (found != null);
     }
+
+    public void createPlaylist (String name) {
+        this.playlists.put(name, new Playlist(name));
+    }
+
+    // Add a song from library to playlist
+    // Returns true if song is added, false otherwise
+    // TODO: Add funtionality if playlist is not found
+    public boolean addSongToPlaylist (String songName, String artistName, String playlistName) {
+        // find playlist
+        Playlist playlist = this.playlists.get(playlistName);
+
+        // find song
+        Song found = null;
+        for (Song song : this.songsByTitle.get(songName)) {
+            if (song.getArtist().equals(artistName)) {
+                found = song;
+            }
+        }
+
+        if (found!=null) {
+            playlist.addSong(found);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Remove song from playlist, returns true if changes made, false otherwise
+    public boolean removeSongFromPlaylist (String songName, String artistName, String playlistName) {
+        // find playlist
+        Playlist playlist = this.playlists.get(playlistName);
+
+        // Iterate and remove song
+        for (Song song : playlist.getSongs()) {
+            if (song.getArtist().equals(artistName) && song.getTitle().equals(songName)) {
+                playlist.removeSong(song);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
