@@ -12,7 +12,7 @@ public class Song {
         this.title = title;
         this.artist = artist;
         this.album = album;
-        this.rating = 0;
+        this.rating = 0; // there is functionality so that if the rating is 0, it will say "no rating".
         this.favorite = false;
     }
     public Song(Song song) {
