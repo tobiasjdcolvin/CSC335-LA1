@@ -30,9 +30,15 @@ public class View {
                 'add song': add a song to your library (as long as it is in the store)
                 'add album': add an album to your library (as long as it is in the store)
                 'get my songs': get a list of all song titles from your library
+
+                'get my artists': get a list of all artists from your library
+                'get my albums': get a list of all albums from your library
+                'get my playlists': get a list of all playlists from your library
+                'get my favorites': get a list of all favorite songs from your library
                 'create playlist': create a playlist
                 'add to playlist': add a song to a playlist
                 'remove from playlist': remove a song from a playlist
+
                 """;
 
         String userInput = "";
@@ -187,6 +193,7 @@ public class View {
                 } else {
                     System.out.println("No songs in library.");
                 }
+
             } else if (userInput.equals("create playlist")) {
                 System.out.println("Enter the name of the playlist you want to create:");
                 String userResponse1 = scanner.nextLine();
@@ -218,6 +225,43 @@ public class View {
                     System.out.println("Successfully removed song from playlist");
                 } else {
                     System.out.println("Could not find song/playlist, no changes made");
+
+            }else if (userInput.equals("get my artists")) {
+                ArrayList<String> result = model.getArtists();
+                if (result.size() > 0) {
+                    for (String info : result) {
+                        System.out.println(info);
+                    }
+                } else {
+                    System.out.println("No artists in library.");
+                }
+            }else if (userInput.equals("get my albums")) {
+                ArrayList<String> result = model.getAlbums();
+                if (result.size() > 0) {
+                    for (String info : result) {
+                        System.out.println(info);
+                    }
+                } else {
+                    System.out.println("No albums in library.");
+                }
+            }else if (userInput.equals("get my playlists")) {
+                ArrayList<String> result = model.getPlaylists();
+                if (result.size() > 0) {
+                    for (String info : result) {
+                        System.out.println(info);
+                    }
+                } else {
+                    System.out.println("No playlists in library.");
+                }
+            }else if (userInput.equals("get my favorites")) {
+                ArrayList<String> result = model.getFavorites();
+                if (result.size() > 0) {
+                    for (String info : result) {
+                        System.out.println(info);
+                    }
+                } else {
+                    System.out.println("No favorites in library.");
+
                 }
             }else {
                 System.out.println("Command not recognised, please try again.");
