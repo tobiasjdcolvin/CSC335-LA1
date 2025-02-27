@@ -145,6 +145,7 @@ public class LibraryModel {
     // search for a playlist by name,
     // returns a playlist represented by string if found, empty string if not
     public String getPlaylistByName(String playlistName) {
+        playlistName = playlistName.toLowerCase();
         if (playlists.containsKey(playlistName)) {
             return playlists.get(playlistName).toString();
         } else {
@@ -262,13 +263,17 @@ public class LibraryModel {
     }
 
     public void createPlaylist (String name) {
-        this.playlists.put(name, new Playlist(name));
+        this.playlists.put(name, new Playlist(name.toLowerCase()));
     }
 
     // Add a song from library to playlist
     // Returns true if song is added, false otherwise
     // TODO: Add functionality if playlist is not found
     public boolean addSongToPlaylist (String songName, String artistName, String playlistName) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+        playlistName = playlistName.toLowerCase();
+
         // find playlist
         Playlist playlist = this.playlists.get(playlistName);
 
@@ -294,6 +299,10 @@ public class LibraryModel {
 
     // Remove song from playlist, returns true if changes made, false otherwise
     public boolean removeSongFromPlaylist (String songName, String artistName, String playlistName) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+        playlistName = playlistName.toLowerCase();
+
         // find playlist
         Playlist playlist = this.playlists.get(playlistName);
         if (playlist == null) {
