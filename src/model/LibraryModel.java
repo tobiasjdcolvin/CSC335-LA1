@@ -252,6 +252,9 @@ public class LibraryModel {
                 albumsByTitle.put(albumName, new ArrayList<Album>());
             }
             albumsByTitle.get(albumName).add(new Album(found));
+
+            // add all songs to library from album
+            for (Song song : found.getSongs()) { this.addSongToLibrary(song.getTitle(), song.getArtist()); }
         }
 
         // returns true if found and false if null
