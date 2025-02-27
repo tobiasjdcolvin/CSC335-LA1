@@ -30,7 +30,6 @@ public class View {
                 'add song': add a song to your library (as long as it is in the store)
                 'add album': add an album to your library (as long as it is in the store)
                 'get my songs': get a list of all song titles from your library
-
                 'get my artists': get a list of all artists from your library
                 'get my albums': get a list of all albums from your library
                 'get my playlists': get a list of all playlists from your library
@@ -38,6 +37,7 @@ public class View {
                 'create playlist': create a playlist
                 'add to playlist': add a song to a playlist
                 'remove from playlist': remove a song from a playlist
+                'favorite song': favorite a song from your library
                 """;
 
         String userInput = "";
@@ -261,6 +261,18 @@ public class View {
                 } else {
                     System.out.println("No favorites in library.");
 
+                }
+            }else if (userInput.equals("favorite song")) {
+                System.out.println("Enter the title of the song you want to favorite:");
+                String userResponse1 = scanner.nextLine();
+                System.out.println("Enter the name of the artist of the song you want to favorite:");
+                String userResponse2 = scanner.nextLine();
+
+                boolean result = model.favoriteASong(userResponse1, userResponse2);
+                if (result == true) {
+                    System.out.println("Successfully favorited " + userResponse1 + " by " + userResponse2 + ".");
+                } else {
+                    System.out.println("Unable to find that song in your library.");
                 }
             }else {
                 System.out.println("Command not recognised, please try again.");

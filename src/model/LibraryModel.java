@@ -16,7 +16,7 @@ public class LibraryModel {
 
     // playlists:
     private HashMap<String, Playlist> playlists;
-    // favorite songs:
+    // list of favorite songs:
     private ArrayList<Song> favorites;
 
     // constructor:
@@ -181,6 +181,30 @@ public class LibraryModel {
 
         // returns true if found and false if null
         return (found != null);
+    }
+
+    public boolean favoriteASong(String songName, String artistName) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+
+        // first, check if the song exists in the library:
+        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
+        if (potentialSongs.size() < 1) {
+            return false;
+        } else {
+            for (Song s : this.songsByTitle.get(songName)) {
+                if (s.getArtist().equals(artistName)) {
+                    // this means that s is the song we want to favorite.
+                    s.setFavorite();
+                    if (!favorites.contains(s)){
+                        favorites.add(s);
+                    }
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /* "get a list of items from the library" - from the spec */

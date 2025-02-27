@@ -23,14 +23,11 @@ public class Song {
         this.favorite = song.getFavorite();
     }
 
-    private boolean getFavorite() {
-        return this.favorite;
-    }
-
     /* Takes input integer between 1-5 */
     public void setRating(int rating) {
         this.rating = rating;
     }
+    public void setFavorite() {this.favorite = true;}
 
     /* Getters */
     public String getTitle() {
@@ -43,6 +40,7 @@ public class Song {
     public int getRating() {
         return this.rating;
     }
+    public boolean getFavorite() {return this.favorite;}
 
     /* Overrides */
     @Override
