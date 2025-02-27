@@ -27,7 +27,7 @@ public class MusicStoreTest {
     public void testGetSongsByTitleWhenNotExist() {
         // testing when the song does not exist
         ArrayList<Song> currSongList = myMusicStore.getSongsByTitle("NotASong");
-        Assert.assertTrue(currSongList == null);
+        Assert.assertTrue(currSongList.size() == 0);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class MusicStoreTest {
     public void testGetSongsByArtistWhenNotExist() {
         // testing when the artist does not exist
         ArrayList<Song> currSongList = myMusicStore.getSongsByArtist("NotAnArtist");
-        Assert.assertTrue(currSongList == null);
+        Assert.assertTrue(currSongList.size() == 0);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class MusicStoreTest {
     public void testGetAlbumsByTitleWhenNotExist() {
         // testing when the album does not exist
         ArrayList<Album> currAlbumList = myMusicStore.getAlbumsByTitle("NotAnAlbum");
-        Assert.assertTrue(currAlbumList == null);
+        Assert.assertTrue(currAlbumList.size() == 0);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class MusicStoreTest {
     public void testGetAlbumsByArtistWhenNotExist() {
         // testing when the artist does not exist
         ArrayList<Album> currAlbumList = myMusicStore.getAlbumsByArtist("NotAnArtist");
-        Assert.assertTrue(currAlbumList == null);
+        Assert.assertTrue(currAlbumList.size() == 0);
     }
 
     @Test
