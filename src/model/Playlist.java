@@ -15,6 +15,11 @@ public class Playlist {
     public void addSong(Song song) {
         songs.add(song);
     }
+    public void removeSong(Song song) {
+        songs.remove(song);
+    }
+
+    protected ArrayList<Song> getSongs() { return songs; }
 
     @Override
     public String toString() {
