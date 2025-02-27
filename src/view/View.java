@@ -29,6 +29,7 @@ public class View {
                 'find playlist': search your playlists for a playlist by name
                 'add song': add a song to your library (as long as it is in the store)
                 'add album': add an album to your library (as long as it is in the store)
+                'get my songs': get a list of all song titles from your library
                 """;
 
         String userInput = "";
@@ -173,6 +174,15 @@ public class View {
                     System.out.println("Successfully added " + userResponse1 + " by " + userResponse2 + ".");
                 } else {
                     System.out.println("Unable to find that album in the music store.");
+                }
+            }else if (userInput.equals("get my songs")) {
+                ArrayList<String> result = model.getSongTitles();
+                if (result.size() > 0) {
+                    for (String info : result) {
+                        System.out.println(info);
+                    }
+                } else {
+                    System.out.println("No songs in library.");
                 }
             }else {
                 System.out.println("Command not recognised, please try again.");
