@@ -26,8 +26,9 @@ public class View {
                 'my songs artist': search your library for songs by an artist
                 'my albums title': search your library for an album by title
                 'my albums artist': search your library for albums by an artist
-                
                 'find playlist': search your playlists for a playlist by name
+                'add song': add a song to your library (as long as it is in the store)
+                'add album': add an album to your library (as long as it is in the store)
                 """;
 
         String userInput = "";
@@ -148,6 +149,30 @@ public class View {
                     System.out.println(result);
                 } else {
                     System.out.println("No playlist found with that name.");
+                }
+            }else if (userInput.equals("add song")) {
+                System.out.println("Enter the title of the song you want to add:");
+                String userResponse1 = scanner.nextLine();
+                System.out.println("Enter the name of the artist of the song you want to add:");
+                String userResponse2 = scanner.nextLine();
+
+                boolean result = model.addSongToLibrary(userResponse1, userResponse2);
+                if (result == true) {
+                    System.out.println("Successfully added " + userResponse1 + " by " + userResponse2 + ".");
+                } else {
+                    System.out.println("Unable to find that song in the music store.");
+                }
+            }else if (userInput.equals("add album")) {
+                System.out.println("Enter the title of the album you want to add:");
+                String userResponse1 = scanner.nextLine();
+                System.out.println("Enter the name of the artist of the album you want to add:");
+                String userResponse2 = scanner.nextLine();
+
+                boolean result = model.addAlbumToLibrary(userResponse1, userResponse2);
+                if (result == true) {
+                    System.out.println("Successfully added " + userResponse1 + " by " + userResponse2 + ".");
+                } else {
+                    System.out.println("Unable to find that album in the music store.");
                 }
             }else {
                 System.out.println("Command not recognised, please try again.");
