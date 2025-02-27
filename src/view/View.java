@@ -38,6 +38,8 @@ public class View {
                 'add to playlist': add a song to a playlist
                 'remove from playlist': remove a song from a playlist
                 'favorite song': favorite a song from your library
+                'rate song': rate a song from your library
+                'get song rating': get the rating of a song from your library
                 """;
 
         String userInput = "";
@@ -274,6 +276,28 @@ public class View {
                 } else {
                     System.out.println("Unable to find that song in your library.");
                 }
+            }else if (userInput.equals("rate song")) {
+                System.out.println("Enter the title of the song you want to rate:");
+                String userResponse1 = scanner.nextLine();
+                System.out.println("Enter the name of the artist of the song you want to rate:");
+                String userResponse2 = scanner.nextLine();
+                System.out.println("Enter what you want to rate the song (integer in the range [1, 5], inclusive):");
+                String userResponse3 = scanner.nextLine();
+
+                boolean result = model.rateASong(userResponse1, userResponse2, userResponse3);
+                if (result == true) {
+                    System.out.println("Successfully rated " + userResponse1 + " by " + userResponse2 + " as " + userResponse3);
+                } else {
+                    System.out.println("Unable to rate, either the song does not exist in your library or you entered an incorrect rating.");
+                }
+            }else if (userInput.equals("get song rating")) {
+                System.out.println("Enter the title of the song you want to view the rating of:");
+                String userResponse1 = scanner.nextLine();
+                System.out.println("Enter the name of the artist of the song you want to view the rating of:");
+                String userResponse2 = scanner.nextLine();
+
+                String result = model.getRating(userResponse1, userResponse2);
+                System.out.println(result);
             }else {
                 System.out.println("Command not recognised, please try again.");
             }

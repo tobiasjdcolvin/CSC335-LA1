@@ -207,6 +207,64 @@ public class LibraryModel {
         return false;
     }
 
+    public String getRating(String songName, String artistName) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+
+        // first, check if the song exists in the library:
+        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
+        if (potentialSongs.size() < 1) {
+            return "Song not found.";
+        } else {
+            for (Song s : this.songsByTitle.get(songName)) {
+                if (s.getArtist().equals(artistName)) {
+                    // this means that s is the song we want to get the rating of.
+                    if (s.getRating() == 0) {
+                        return "No rating.";
+                    }
+                    return "" + s.getRating();
+                }
+            }
+        }
+
+        return "Could not find song rating";
+    }
+
+    public boolean rateASong(String songName, String artistName, String rating) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+        int actualRating = 0;
+
+        try {
+            actualRating = Integer.parseInt(rating);
+        } catch (Exception e) {
+            return false;
+        }
+
+        if (actualRating < 1 || actualRating > 5) {
+            return false;
+        }
+
+        // check if the song exists in the library:
+        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
+        if (potentialSongs.size() < 1) {
+            return false;
+        } else {
+            for (Song s : this.songsByTitle.get(songName)) {
+                // this means that s is the song we want to rate.
+                if (s.getArtist().equals(artistName)) {
+                    if (actualRating == 5) {
+                        this.favoriteASong(songName, artistName);
+                    }
+                    s.setRating(actualRating);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     /* "get a list of items from the library" - from the spec */
     // get a 'list' of song titles:
     public ArrayList<String> getSongTitles() {
