@@ -22,81 +22,50 @@ public class LibraryModelTest {
     public void testGetSongTitles() {
         testModel.addSongToLibrary("Tired", "Adele");
         testModel.addSongToLibrary("Secrets", "OneRepublic");
-        // TODO: actually write real tests instead of just printing stuff
-        for (String title : testModel.getSongTitles()) {
-            System.out.println(title);
-        }
+        Assert.assertEquals(2, testModel.getSongTitles().size());
     }
 
     @Test
     public void testGetSongsByTitle() {
         testModel.addSongToLibrary("Tired", "Adele");
-
         ArrayList<String> songList = testModel.getSongsByTitle("Tired");
-        // TODO: actually write real tests instead of just printing stuff
-        for (String s : songList) {
-            System.out.println(s);
-        }
+        Assert.assertTrue(songList.size() == 1);
     }
 
     @Test
     public void testGetAlbumsByTitle() {
-        // TODO: CHECK THIS UNIT TEST AFTER IMPLEMENTING ADDALBUMTOLIBRARY
         ArrayList<String> albumList = testModel.getAlbumsByTitle("19");
-        // TODO: actually write real tests instead of just printing stuff
-        for (String a : albumList) {
-            System.out.println(a);
-        }
+        Assert.assertEquals(0, albumList.size());
     }
 
     @Test
     public void testGetSongsByArtist() {
         testModel.addSongToLibrary("Secrets", "OneRepublic");
-
         ArrayList<String> songList = testModel.getSongsByArtist("OneRepublic");
-        // TODO: actually write real tests instead of just printing stuff
-        for (String s : songList) {
-            System.out.println(s);
-        }
+        Assert.assertEquals(1, songList.size());
     }
 
     @Test
     public void testGetSongsByTitleFromStore() {
         ArrayList<String> songList = testModel.getSongsByTitleFromStore("Secrets");
-
-        // TODO: actually write real tests instead of just printing stuff
-        for (String s : songList) {
-            System.out.println(s);
-        }
+        Assert.assertEquals(1, songList.size());
     }
 
     @Test
     public void testGetAlbumsByTitleFromStore() {
         ArrayList<String> albumList = testModel.getAlbumsByTitleFromStore("19");
-
-        // TODO: actually write real tests instead of just printing stuff
-        for (String a : albumList) {
-            System.out.println(a);
-        }
+        Assert.assertEquals(1, albumList.size());
     }
 
     @Test
     public void testGetSongsByArtistFromStore() {
         ArrayList<String> songList = testModel.getSongsByArtistFromStore("Adele");
-
-        // TODO: actually write real tests instead of just printing stuff
-        for (String s : songList) {
-            System.out.println(s);
-        }
+        Assert.assertEquals(24, songList.size());
     }
 
     @Test
     public void testGetAlbumsByArtistFromStore() {
         ArrayList<String> albumList = testModel.getAlbumsByArtistFromStore("Adele");
-
-        // TODO: actually write real tests instead of just printing stuff
-        for (String a : albumList) {
-            System.out.println(a + "\n");
-        }
+        Assert.assertEquals(2, albumList.size());
     }
 }
