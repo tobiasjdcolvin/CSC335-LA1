@@ -38,7 +38,6 @@ public class View {
                 'create playlist': create a playlist
                 'add to playlist': add a song to a playlist
                 'remove from playlist': remove a song from a playlist
-
                 """;
 
         String userInput = "";
@@ -225,7 +224,7 @@ public class View {
                     System.out.println("Successfully removed song from playlist");
                 } else {
                     System.out.println("Could not find song/playlist, no changes made");
-
+                }
             }else if (userInput.equals("get my artists")) {
                 ArrayList<String> result = model.getArtists();
                 if (result.size() > 0) {
@@ -269,3 +268,4 @@ public class View {
         }
     }
 }
+
