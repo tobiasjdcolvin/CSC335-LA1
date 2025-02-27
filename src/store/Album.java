@@ -14,6 +14,17 @@ public class Album {
         this.songs = new ArrayList<Song>();
     }
 
+    public Album(Album album) {
+        this.title = album.getTitle();
+        this.artist = album.getArtist();
+        this.songs = new ArrayList<Song>();
+
+        // Make deep copy of songs
+        for (Song song : album.songs) {
+            this.songs.add(new Song(song));
+        }
+    }
+
     /* Methods */
     public void addSong(Song song) {
         this.songs.add(song);

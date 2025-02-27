@@ -227,4 +227,34 @@ public class LibraryModel {
         }
         return returnLst;
     }
+
+    // Add an Album from the store to the library
+    public boolean addAlbumToLibrary (String albumName, String artistName) {
+        albumName = albumName.toLowerCase();
+        artistName = artistName.toLowerCase();
+
+        // Find album in store
+        ArrayList<Album> potentialAlbumList = store.getAlbumsByArtist(artistName);
+        Album found = null;
+        for (Album album : potentialAlbumList) {
+            if (album.getTitle().equals(albumName)) {
+                found = album;
+            }
+        }
+
+        // Add album to appropriate hashmap
+        if (found != null) {
+            if (!albumsByArtist.containsKey(artistName)) {
+                albumsByArtist.put(artistName, new ArrayList<Album>());
+            }
+            albumsByArtist.get(artistName).add(new Album(found));
+            if (!albumsByTitle.containsKey(albumName)) {
+                albumsByTitle.put(albumName, new ArrayList<Album>());
+            }
+            albumsByTitle.get(albumName).add(new Album(found));
+        }
+
+        // returns true if found and false if null
+        return (found != null);
+    }
 }
