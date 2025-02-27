@@ -37,6 +37,13 @@ public class Album {
     public String getArtist() {
         return this.artist;
     }
+    public ArrayList<Song> getSongs() {
+        ArrayList<Song> songs = new ArrayList<Song>();
+        for (Song song : this.songs) {
+            songs.add(new Song(song));
+        }
+        return songs;
+    }
 
     /* Overrides */
     @Override
