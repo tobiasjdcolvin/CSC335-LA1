@@ -28,16 +28,15 @@ public class MusicStore {
             // store them as strings in an ArrayList
             this.albumFiles = new ArrayList<String>();
             String line;
-            if (bReader.ready()){
-                // for every line in albums.txt, split the line on
-                // the comma, and construct the file names accordingly,
-                // then add each file name to albumFiles
-                while ((line = bReader.readLine()) != null) {
-                    String[] splitTxt = line.split(",");
-                    // format: "src/albums/{ALBUM NAME}.txt"
-                    String fileName = "src/albums/" + splitTxt[0] + "_" + splitTxt[1] + ".txt";
-                    albumFiles.add(fileName);
-                }
+
+            // for every line in albums.txt, split the line on
+            // the comma, and construct the file names accordingly,
+            // then add each file name to albumFiles
+            while ((line = bReader.readLine()) != null) {
+                String[] splitTxt = line.split(",");
+                // format: "src/albums/{ALBUM NAME}.txt"
+                String fileName = "src/albums/" + splitTxt[0] + "_" + splitTxt[1] + ".txt";
+                albumFiles.add(fileName);
             }
 
             // populate the hashmaps:
