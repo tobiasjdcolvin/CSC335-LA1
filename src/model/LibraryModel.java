@@ -171,11 +171,11 @@ public class LibraryModel {
             if (!songsByArtist.containsKey(artistName)) {
                 songsByArtist.put(artistName, new ArrayList<Song>());
             }
-            songsByArtist.get(artistName).add(found);
+            songsByArtist.get(artistName).add(new Song(found));
             if (!songsByTitle.containsKey(songName)) {
                 songsByTitle.put(songName, new ArrayList<Song>());
             }
-            songsByTitle.get(songName).add(found);
+            songsByTitle.get(songName).add(new Song(found));
         }
 
         // returns true if found and false if null
