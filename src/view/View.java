@@ -6,9 +6,8 @@ import src.model.LibraryModel;
 import src.store.MusicStore;
 
 public class View {
-    public static void main(String[] args) {
-        MusicStore store = new MusicStore();
-        LibraryModel model = new LibraryModel(store);
+    public static void start(LibraryModel modelArg) {
+        LibraryModel model = modelArg;
         Scanner scanner = new Scanner(System.in);
         // add any new commands here and give descriptions of them:
         String commandsInfo = """
