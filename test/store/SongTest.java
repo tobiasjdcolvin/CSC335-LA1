@@ -21,6 +21,18 @@ public class SongTest {
     }
 
     @Test
+    public void testSetRatingEdgeCases() {
+        song.setRating(1);
+        Assert.assertEquals(1, song.getRating());
+        song.setRating(2);
+        Assert.assertEquals(2, song.getRating());
+        song.setRating(3);
+        Assert.assertEquals(3, song.getRating());
+        song.setRating(4);
+        Assert.assertEquals(4, song.getRating());
+    }
+
+    @Test
     public void testString() {
         Assert.assertEquals("Amazon - Bernarldo - Christmas", song.toString());
     }

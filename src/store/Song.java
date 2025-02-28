@@ -53,6 +53,7 @@ public class Song {
             this.rating = Rating.NONE;
         }
     }
+
     public void setFavorite() {this.favorite = true;}
 
     /*=============================================================================================
@@ -68,6 +69,7 @@ public class Song {
         return this.artist;
     }
     public String getAlbum() {return this.album;}
+
     public int getRating() {
         if (this.rating == Rating.ONE) {
             return 1;
@@ -83,6 +85,7 @@ public class Song {
             return 0;
         }
     }
+
     public boolean getFavorite() {return this.favorite;}
 
     /*=============================================================================================
