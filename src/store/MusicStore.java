@@ -7,15 +7,19 @@ import java.util.ArrayList;
 public class MusicStore {
     // We chose to utilize hashmaps for storing the data, because
     // access via keys should be O(1).
-    private HashMap<String, ArrayList<Song>> songsByTitle;
-    private HashMap<String, ArrayList<Song>> songsByArtist;
-    private HashMap<String, ArrayList<Album>> albumsByTitle;
-    private HashMap<String, ArrayList<Album>> albumsByArtist;
+    private final HashMap<String, ArrayList<Song>> songsByTitle;
+    private final HashMap<String, ArrayList<Song>> songsByArtist;
+    private final HashMap<String, ArrayList<Album>> albumsByTitle;
+    private final HashMap<String, ArrayList<Album>> albumsByArtist;
 
-    private ArrayList<String> albumFiles;
+    /*=============================================================================================
+     *
+     * Constructors
+     *
+     *===========================================================================================*/
 
-    // constructor
     public MusicStore() {
+        // Initialize Hashmaps
         this.songsByTitle = new HashMap<String, ArrayList<Song>>();
         this.songsByArtist = new HashMap<String, ArrayList<Song>>();
         this.albumsByTitle = new HashMap<String, ArrayList<Album>>();
@@ -26,7 +30,7 @@ public class MusicStore {
 
             // construct the file names for all the album files, and
             // store them as strings in an ArrayList
-            this.albumFiles = new ArrayList<String>();
+            ArrayList<String> albumFiles = new ArrayList<String>();
             String line;
 
             // for every line in albums.txt, split the line on
@@ -40,7 +44,7 @@ public class MusicStore {
             }
 
             // populate the hashmaps:
-            for (String album : this.albumFiles) {
+            for (String album : albumFiles) {
                 bReader = new BufferedReader(new FileReader(album));
                 // for the first line, split it on commas to extract album name,
                 // artist name.
@@ -94,6 +98,12 @@ public class MusicStore {
         }
     }
 
+    /*=============================================================================================
+     *
+     * Getter Methods
+     *
+     *===========================================================================================*/
+
     // returns an ArrayList of Song objects if found, empty ArrayList if not
     public ArrayList<Song> getSongsByTitle(String songTitle) {
         songTitle = songTitle.toLowerCase();
@@ -103,6 +113,7 @@ public class MusicStore {
             return new ArrayList<>();
         }
     }
+
 
     // returns an ArrayList of Song objects if found, empty ArrayList if not
     public ArrayList<Song> getSongsByArtist(String artistName) {
@@ -114,6 +125,7 @@ public class MusicStore {
         }
     }
 
+
     // returns an ArrayList of Album objects if found, empty ArrayList if not
     public ArrayList<Album> getAlbumsByTitle(String albumTitle) {
         albumTitle = albumTitle.toLowerCase();
@@ -123,6 +135,7 @@ public class MusicStore {
             return new ArrayList<>();
         }
     }
+
 
     // returns an ArrayList of Album objects if found, empty ArrayList if not
     public ArrayList<Album> getAlbumsByArtist(String artistName) {

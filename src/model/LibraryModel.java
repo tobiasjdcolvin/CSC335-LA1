@@ -19,7 +19,12 @@ public class LibraryModel {
     // list of favorite songs:
     private ArrayList<Song> favorites;
 
-    // constructor:
+    /*=============================================================================================
+     *
+     * Constructors
+     *
+     *===========================================================================================*/
+
     public LibraryModel(MusicStore store) {
         this.store = store;
 
@@ -32,6 +37,11 @@ public class LibraryModel {
         this.favorites = new ArrayList<Song>();
     }
 
+    /*=============================================================================================
+     *
+     * Getters
+     *
+     *===========================================================================================*/
 
     // returns an ArrayList of song info if found, empty ArrayList if not
     public ArrayList<String> getSongsByTitle(String songTitle) {
@@ -56,9 +66,7 @@ public class LibraryModel {
         for (Song song: songs) {
             songInfo.add(song.toString());
         }
-
         return songInfo;
-
     }
 
     // returns an ArrayList of song info if found, empty ArrayList if not
@@ -153,59 +161,6 @@ public class LibraryModel {
         }
     }
 
-    // add a song to the library:
-    public boolean addSongToLibrary(String songName, String artistName) {
-        songName = songName.toLowerCase();
-        artistName = artistName.toLowerCase();
-
-        // first, check if the song exists in the store:
-        ArrayList<Song> potentialSongs = store.getSongsByTitle(songName);
-        Song found = null;
-        for (Song s : potentialSongs) {
-            if (s.getArtist().equals(artistName)) {
-                found = s;
-            }
-        }
-
-        // if the song exists in the store, add it to the library
-        if (found != null) {
-            if (!songsByArtist.containsKey(artistName)) {
-                songsByArtist.put(artistName, new ArrayList<Song>());
-            }
-            songsByArtist.get(artistName).add(new Song(found));
-            if (!songsByTitle.containsKey(songName)) {
-                songsByTitle.put(songName, new ArrayList<Song>());
-            }
-            songsByTitle.get(songName).add(new Song(found));
-        }
-
-        // returns true if found and false if null
-        return (found != null);
-    }
-
-    public boolean favoriteASong(String songName, String artistName) {
-        songName = songName.toLowerCase();
-        artistName = artistName.toLowerCase();
-
-        // first, check if the song exists in the library:
-        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
-        if (potentialSongs.size() < 1) {
-            return false;
-        } else {
-            for (Song s : this.songsByTitle.get(songName)) {
-                if (s.getArtist().equals(artistName)) {
-                    // this means that s is the song we want to favorite.
-                    s.setFavorite();
-                    if (!favorites.contains(s)){
-                        favorites.add(s);
-                    }
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
     public String getRating(String songName, String artistName) {
         songName = songName.toLowerCase();
@@ -230,40 +185,6 @@ public class LibraryModel {
         return "Could not find song rating";
     }
 
-    public boolean rateASong(String songName, String artistName, String rating) {
-        songName = songName.toLowerCase();
-        artistName = artistName.toLowerCase();
-        int actualRating = 0;
-
-        try {
-            actualRating = Integer.parseInt(rating);
-        } catch (Exception e) {
-            return false;
-        }
-
-        if (actualRating < 1 || actualRating > 5) {
-            return false;
-        }
-
-        // check if the song exists in the library:
-        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
-        if (potentialSongs.size() < 1) {
-            return false;
-        } else {
-            for (Song s : this.songsByTitle.get(songName)) {
-                // this means that s is the song we want to rate.
-                if (s.getArtist().equals(artistName)) {
-                    if (actualRating == 5) {
-                        this.favoriteASong(songName, artistName);
-                    }
-                    s.setRating(actualRating);
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
     /* "get a list of items from the library" - from the spec */
     // get a 'list' of song titles:
@@ -310,6 +231,104 @@ public class LibraryModel {
         }
         return returnLst;
     }
+
+    /*=============================================================================================
+     *
+     * Methods
+     *
+     *===========================================================================================*/
+
+    // add a song to the library:
+    public boolean addSongToLibrary(String songName, String artistName) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+
+        // first, check if the song exists in the store:
+        ArrayList<Song> potentialSongs = store.getSongsByTitle(songName);
+        Song found = null;
+        for (Song s : potentialSongs) {
+            if (s.getArtist().equals(artistName)) {
+                found = s;
+            }
+        }
+
+        // if the song exists in the store, add it to the library
+        if (found != null) {
+            if (!songsByArtist.containsKey(artistName)) {
+                songsByArtist.put(artistName, new ArrayList<Song>());
+            }
+            songsByArtist.get(artistName).add(new Song(found));
+            if (!songsByTitle.containsKey(songName)) {
+                songsByTitle.put(songName, new ArrayList<Song>());
+            }
+            songsByTitle.get(songName).add(new Song(found));
+        }
+
+        // returns true if found and false if null
+        return (found != null);
+    }
+
+
+    public boolean favoriteASong(String songName, String artistName) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+
+        // first, check if the song exists in the library:
+        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
+        if (potentialSongs.size() < 1) {
+            return false;
+        } else {
+            for (Song s : this.songsByTitle.get(songName)) {
+                if (s.getArtist().equals(artistName)) {
+                    // this means that s is the song we want to favorite.
+                    s.setFavorite();
+                    if (!favorites.contains(s)){
+                        favorites.add(s);
+                    }
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    public boolean rateASong(String songName, String artistName, String rating) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+        int actualRating = 0;
+
+        try {
+            actualRating = Integer.parseInt(rating);
+        } catch (Exception e) {
+            return false;
+        }
+
+        if (actualRating < 1 || actualRating > 5) {
+            return false;
+        }
+
+        // check if the song exists in the library:
+        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
+        if (potentialSongs.size() < 1) {
+            return false;
+        } else {
+            for (Song s : this.songsByTitle.get(songName)) {
+                // this means that s is the song we want to rate.
+                if (s.getArtist().equals(artistName)) {
+                    if (actualRating == 5) {
+                        this.favoriteASong(songName, artistName);
+                    }
+                    s.setRating(actualRating);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     // Add an Album from the store to the library
     public boolean addAlbumToLibrary (String albumName, String artistName) {
@@ -358,6 +377,9 @@ public class LibraryModel {
 
         // find playlist
         Playlist playlist = this.playlists.get(playlistName);
+        if (playlist == null) {
+            return false;
+        }
 
         // find song
         Song found = null;
@@ -402,3 +424,8 @@ public class LibraryModel {
 
 
 }
+
+
+
+
+
