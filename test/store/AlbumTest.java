@@ -19,7 +19,6 @@ public class AlbumTest {
     @Test
     public void testAddSong() {
         album.addSong(new Song("Tweenty Five Point Five Five Five Nine Help Me", "Bum Al", "Bum Comma Al"));
-        System.out.println(album);
         Assert.assertEquals("Bum Comma Al: Bum Al\nTweenty Five Point Five Five Five Nine Help Me", album.toString());
     }
 
