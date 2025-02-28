@@ -7,13 +7,20 @@ public class Album {
     private final String artist;
     private ArrayList<Song> songs;
 
-    /* Constructors */
+    /*=============================================================================================
+     *
+     * Constructors
+     *
+     *===========================================================================================*/
+
+    // Main constructor
     public Album(String title, String artist) {
         this.title = title;
         this.artist = artist;
         this.songs = new ArrayList<Song>();
     }
 
+    // Copy constructor
     public Album(Album album) {
         this.title = album.getTitle();
         this.artist = album.getArtist();
@@ -25,12 +32,22 @@ public class Album {
         }
     }
 
-    /* Methods */
+    /*=============================================================================================
+     *
+     * Methods
+     *
+     *===========================================================================================*/
+
     public void addSong(Song song) {
         this.songs.add(song);
     }
 
-    /* Getters */
+    /*=============================================================================================
+     *
+     * Getters
+     *
+     *===========================================================================================*/
+
     public String getTitle() {
         return this.title;
     }
@@ -45,8 +62,14 @@ public class Album {
         return songs;
     }
 
-    /* Overrides */
+    /*=============================================================================================
+     *
+     * Overrides
+     *
+     *===========================================================================================*/
+
     @Override
+    // <Album name>: <Artist>\n<Song1>\n<Song2>...
     public String toString() {
         String ret = this.title + ": " + this.artist;
         for (Song song : this.songs) {
