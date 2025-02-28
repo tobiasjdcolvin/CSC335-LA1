@@ -19,7 +19,14 @@ public class Playlist {
         songs.remove(song);
     }
 
-    protected ArrayList<Song> getSongs() { return songs; }
+    // Returns a deep copy of songs
+    public ArrayList<Song> getSongs() {
+        ArrayList<Song> songs2 = new ArrayList<Song>();
+        for (Song song : this.songs) {
+            songs2.add(new Song(song));
+        }
+        return songs2;
+    }
 
     @Override
     public String toString() {
