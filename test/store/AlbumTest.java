@@ -22,6 +22,20 @@ public class AlbumTest {
         Assert.assertEquals("Bum Comma Al: Bum Al\nTweenty Five Point Five Five Five Nine Help Me", album.toString());
     }
 
+    @Test
+    public void testClone() {
+        album.addSong(new Song("Tweenty Five Point Five Five Five Nine Help Me", "Bum Al", "Bum Comma Al"));
+        Album album2 = new Album(album);
+        Assert.assertEquals("Bum Comma Al: Bum Al\nTweenty Five Point Five Five Five Nine Help Me", album2.toString());
+    }
+
+    @Test
+    public void testGetSongs() {
+        Song song = new Song("Tweenty Five Point Five Five Five Nine Help Me", "Bum Al", "Bum Comma Al");
+        album.addSong(song);
+        Assert.assertEquals(song.getTitle(), album.getSongs().getFirst().getTitle());
+    }
+
 
 
 }
