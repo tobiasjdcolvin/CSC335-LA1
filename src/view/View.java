@@ -12,7 +12,6 @@ public class View {
         // add any new commands here and give descriptions of them:
         String commandsInfo = """
                 'exit': exits the program
-                'clear': clears the screen
                 --------------------------------------------------------------
                 MUSIC STORE COMMANDS:
                 'store songs title': search the store for a song by title

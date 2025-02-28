@@ -1,1 +1,1 @@
-(WIP) Music library managing software, an assignment for CSC 335
+Music library managing software, an assignment for CSC 335
