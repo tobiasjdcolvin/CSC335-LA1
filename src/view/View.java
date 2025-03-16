@@ -3,6 +3,7 @@ package src.view;
 import java.util.ArrayList;
 import java.util.Scanner;
 import src.model.LibraryModel;
+import src.model.UserModel;
 import src.store.MusicStore;
 
 public class View {
