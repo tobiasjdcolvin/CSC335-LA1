@@ -18,10 +18,10 @@ public class UserModelTest {
         myUserModel.addUser("jonathan", "passwd");
         System.out.println(myUserModel.getNumUsers());
 
-        System.out.println(myUserModel.getCurrUserIsNull());
+        System.out.println(myUserModel.getLoggedIn());
         System.out.println(myUserModel.login("chri", "mynameischris"));
-        System.out.println(myUserModel.getCurrUserIsNull());
+        System.out.println(myUserModel.getLoggedIn());
         System.out.println(myUserModel.login("chris", "mynameischris"));
-        System.out.println(myUserModel.getCurrUserIsNull());
+        System.out.println(myUserModel.getLoggedIn());
     }
 }
