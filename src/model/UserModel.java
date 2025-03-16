@@ -55,13 +55,16 @@ public class UserModel {
     public String addUser(String username, String password) {
         if (!(this.userPasswords.containsKey(username))) {
             // add username, password to txt file, and update hashmaps
-            try(FileWriter myfw = new FileWriter("src/store/UserStore.txt", true);
-                BufferedWriter mybw = new BufferedWriter(myfw);
-                PrintWriter myout = new PrintWriter(mybw))
+
+            // appending to the end of the file (that is what the second argument does)
+            try(FileWriter myfilewriter = new FileWriter("src/store/UserStore.txt", true);
+                BufferedWriter mybufferedwriter = new BufferedWriter(myfilewriter);
+                // PrintWriter allows you to use familiar methods like print and println
+                PrintWriter myprintwriter = new PrintWriter(mybufferedwriter))
             {
                 String myString = username + " " + password;
-                myout.print("\n");
-                myout.print(myString);
+                myprintwriter.print("\n");
+                myprintwriter.print(myString);
             } catch (IOException exception) {
                 // unable to add user due to file errors
                 return "Internal server error";
@@ -91,12 +94,105 @@ public class UserModel {
         }
     }
 
+    public void logout() {
+        this.currUser = null;
+    }
+
     public int getNumUsers() {
         return this.users.size();
     }
 
-    // for debugging
-    public boolean getCurrUserIsNull() {
-        return this.currUser == null;
+    public boolean getLoggedIn() {
+
+        return this.currUser != null;
+    }
+
+    // methods from LibraryModel:
+    public ArrayList<String> getSongsByTitleFromStore(String input) {
+        return this.currUser.getSongsByTitleFromStore(input);
+    }
+
+    public ArrayList<String> getSongsByArtistFromStore(String input) {
+        return this.currUser.getSongsByArtistFromStore(input);
+    }
+
+    public ArrayList<String> getAlbumsByTitleFromStore(String input) {
+        return this.currUser.getAlbumsByTitleFromStore(input);
+    }
+
+    public ArrayList<String> getAlbumsByArtistFromStore(String input) {
+        return this.currUser.getAlbumsByArtistFromStore(input);
+    }
+
+    public ArrayList<String> getSongsByTitle(String input) {
+        return this.currUser.getSongsByTitle(input);
+    }
+
+    public ArrayList<String> getSongsByArtist(String input) {
+        return this.currUser.getSongsByArtist(input);
+    }
+
+    public ArrayList<String> getAlbumsByTitle(String input) {
+        return this.currUser.getAlbumsByTitle(input);
+    }
+
+    public ArrayList<String> getAlbumsByArtist(String input) {
+        return this.currUser.getAlbumsByArtist(input);
+    }
+
+    public String getPlaylistByName(String input) {
+        return this.currUser.getPlaylistByName(input);
+    }
+
+    public boolean addSongToLibrary(String input1, String input2) {
+        return this.currUser.addSongToLibrary(input1, input2);
+    }
+
+    public boolean addAlbumToLibrary(String input1, String input2) {
+        return this.currUser.addAlbumToLibrary(input1, input2);
+    }
+
+    public ArrayList<String> getSongTitles() {
+        return this.currUser.getSongTitles();
+    }
+
+    public void createPlaylist(String input) {
+        this.currUser.createPlaylist(input);
+    }
+
+    public boolean addSongToPlaylist(String input1, String input2, String input3) {
+        return this.currUser.addSongToPlaylist(input1, input2, input3);
+    }
+
+    public boolean removeSongFromPlaylist(String input1, String input2, String input3) {
+        return this.currUser.removeSongFromPlaylist(input1, input2, input3);
+    }
+
+    public ArrayList<String> getArtists() {
+        return this.currUser.getArtists();
+    }
+
+    public ArrayList<String> getAlbums() {
+        return this.currUser.getAlbums();
+    }
+
+    public ArrayList<String> getPlaylists() {
+        return this.currUser.getPlaylists();
+    }
+
+    public ArrayList<String> getFavorites() {
+        return this.currUser.getFavorites();
+    }
+
+    public boolean favoriteASong(String input1, String input2) {
+        return this.currUser.favoriteASong(input1, input2);
+    }
+
+    public boolean rateASong(String input1, String input2, String input3) {
+        return this.currUser.rateASong(input1, input2, input3);
+    }
+
+    public String getRating(String input1, String input2) {
+        return this.currUser.getRating(input1, input2);
     }
 }
