@@ -44,6 +44,7 @@ public class View {
                 'get song rating': get the rating of a song from your library
                 'play song': play a song in your library
                 'get plays': get the number of plays a song in your library has
+                'recently played': get a list of recently played songs
                 """;
 
         String userInput = "";
@@ -90,6 +91,12 @@ public class View {
                     } else {
                         System.out.println("Song not found.");
                     }
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("recently played")) {
+                if (model.getLoggedIn()) {
+                    System.out.println(model.getRecentlyPlayed());
                 } else {
                     System.out.println("Please login");
                 }
