@@ -68,7 +68,7 @@ public class UserModel {
                 // PrintWriter allows you to use familiar methods like print and println
                 PrintWriter myprintwriter = new PrintWriter(mybufferedwriter))
             {
-                String myString = username + " " + password + salt + " " + salt; // TODO: Add hashing here
+                String myString = username + " " + password + " " + salt; // TODO: Add hashing here
                 myprintwriter.print("\n");
                 myprintwriter.print(myString);
             } catch (IOException exception) {
@@ -80,7 +80,7 @@ public class UserModel {
             this.userPasswords.put(username, password);
             LibraryModel newUserLibrary = new LibraryModel(musicStore);
             this.users.put(username, newUserLibrary);
-            return "Succesfully created account";
+            return "Successfully created account";
         } else {
             return "Username already exists";
         }
