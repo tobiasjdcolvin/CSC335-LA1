@@ -293,6 +293,45 @@ public class LibraryModel {
         return false;
     }
 
+    public boolean playASong(String songName, String artistName) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+
+        // first, check if the song exists in the library:
+        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
+        if (potentialSongs.size() < 1) {
+            return false;
+        } else {
+            for (Song s : this.songsByTitle.get(songName)) {
+                if (s.getArtist().equals(artistName)) {
+                    // this means that s is the song we want to play.
+                    s.play();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // returns -1 if song not found
+    public int getPlays(String songName, String artistName) {
+        songName = songName.toLowerCase();
+        artistName = artistName.toLowerCase();
+
+        // first, check if the song exists in the library:
+        ArrayList<String> potentialSongs = this.getSongsByTitle(songName);
+        if (potentialSongs.size() < 1) {
+            return -1;
+        } else {
+            for (Song s : this.songsByTitle.get(songName)) {
+                if (s.getArtist().equals(artistName)) {
+                    // this means that s is the song we want to get the plays of.
+                    return s.getPlays();
+                }
+            }
+        }
+        return -1;
+    }
 
     public boolean rateASong(String songName, String artistName, String rating) {
         songName = songName.toLowerCase();
