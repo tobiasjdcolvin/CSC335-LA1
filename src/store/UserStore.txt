@@ -1,4 +1,4 @@
-testuser testpassword
-chris mynameischris
-jonathan passwd
-plopman plop
+testuser testpassword testsalt
+chris mynameischris chrissalt
+jonathan passwd 7[iNsuYpEw[t1|Ztvk1d2vQK>AY9BSY?o?<2b9d:FXXq[[Yl;9zf|Etq><=xkK/F
+plopman plop HEb6-;Lx,mA0]YlQ8h30rmyE'KHv-Mx.??>Qlkd'r]Do'[1;ecPmGekYPU-wIdRL
