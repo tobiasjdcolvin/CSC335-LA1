@@ -3,6 +3,7 @@ package src.model;
 import src.store.Album;
 import src.store.MusicStore;
 import src.store.Song;
+import java.util.Random;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class UserModel {
     private MusicStore musicStore;
     // keys: username, values: password
     private HashMap<String, String> userPasswords;
+    private HashMap<String, String> userSalts;
     // keys: username, values: LibraryModel objects (basically all user info)
     private HashMap<String, LibraryModel> users;
 
@@ -37,10 +39,12 @@ public class UserModel {
                 String[] splitTxt = line.split(" ");
                 String username = splitTxt[0];
                 String password = splitTxt[1];
+                String salt = splitTxt[2];
 
                 // populate the hashmaps
                 if (!(this.userPasswords.containsKey(username))) {
                     this.userPasswords.put(username, password);
+                    this.userSalts.put(username, salt);
                     LibraryModel newUserLibrary = new LibraryModel(musicStore);
                     this.users.put(username, newUserLibrary);
                 }
@@ -53,6 +57,7 @@ public class UserModel {
 
     // call this when registering a new user
     public String addUser(String username, String password) {
+        String salt = createSalt();
         if (!(this.userPasswords.containsKey(username))) {
             // add username, password to txt file, and update hashmaps
 
@@ -62,7 +67,7 @@ public class UserModel {
                 // PrintWriter allows you to use familiar methods like print and println
                 PrintWriter myprintwriter = new PrintWriter(mybufferedwriter))
             {
-                String myString = username + " " + password;
+                String myString = username + " " + password + salt + " " + salt; // TODO: Add hashing here
                 myprintwriter.print("\n");
                 myprintwriter.print(myString);
             } catch (IOException exception) {
@@ -80,10 +85,21 @@ public class UserModel {
         }
     }
 
+    // Creates a random salt to be appended to the password during hashing
+    private String createSalt() {
+        String charSet = "qwertyuiopasdfghjklzxcvbnm,./;'[]1234567890-=QWERTYUIOPASDFGHJKLZXCVBNM<>?:{}|";
+        Random random = new Random();
+        String salt = "";
+        for (int i = 0; i < 64; i++) {
+            salt += charSet.charAt(random.nextInt(charSet.length()));
+        }
+        return salt;
+    }
+
     // login as a registered user
     public String login(String username, String password) {
         if (userPasswords.containsKey(username)) {
-            if (userPasswords.get(username).equals(password)) {
+            if (userPasswords.get(username).equals(password)) { // TODO: Add hashing here
                 currUser = users.get(username);
                 return "Successfully logged in as " + username;
             } else {
@@ -92,6 +108,11 @@ public class UserModel {
         } else {
             return "Account does not exist, please register a new account";
         }
+    }
+
+    private boolean passwordCheck(String username, String password) {
+
+        return false;
     }
 
     public void logout() {
