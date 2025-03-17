@@ -6,6 +6,7 @@ public class Song {
     private final String album;
     private Rating rating;
     private boolean favorite;
+    private int plays;
 
     /*=============================================================================================
      *
@@ -20,6 +21,7 @@ public class Song {
         this.album = album;
         this.rating = Rating.NONE; // there is functionality so that if the rating is 0, it will say "no rating".
         this.favorite = false;
+        this.plays = 0;
     }
 
     // Copy Constructor
@@ -29,6 +31,7 @@ public class Song {
         this.setRating(song.getRating());
         this.album = song.getAlbum();
         this.favorite = song.getFavorite();
+        this.plays = song.getPlays();
     }
 
     /*=============================================================================================
@@ -86,7 +89,13 @@ public class Song {
         }
     }
 
+    public int getPlays() {return this.plays;}
+
     public boolean getFavorite() {return this.favorite;}
+
+    public void play() {
+        this.plays += 1;
+    }
 
     /*=============================================================================================
      *

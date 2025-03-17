@@ -42,6 +42,8 @@ public class View {
                 'favorite song': favorite a song from your library
                 'rate song': rate a song from your library
                 'get song rating': get the rating of a song from your library
+                'play song': play a song in your library
+                'get plays': get the number of plays a song in your library has
                 """;
 
         String userInput = "";
@@ -372,6 +374,38 @@ public class View {
                 } else {
                     System.out.println("Unable to find that song in your library.");
                 }
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("play song")) {
+                if (model.getLoggedIn()) {
+                    System.out.println("Enter the title of the song you want to play:");
+                    String userResponse1 = scanner.nextLine();
+                    System.out.println("Enter the name of the artist of the song you want to play:");
+                    String userResponse2 = scanner.nextLine();
+
+                    boolean result = model.playASong(userResponse1, userResponse2);
+                    if (result == true) {
+                        System.out.println("Playing " + userResponse1 + " by " + userResponse2 + " now.");
+                    } else {
+                        System.out.println("Unable to find that song in your library.");
+                    }
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("get plays")) {
+                if (model.getLoggedIn()) {
+                    System.out.println("Enter the title of the song you want to get the number of plays for:");
+                    String userResponse1 = scanner.nextLine();
+                    System.out.println("Enter the name of the artist of the song you want to get the number of plays for:");
+                    String userResponse2 = scanner.nextLine();
+
+                    int result = model.getPlays(userResponse1, userResponse2);
+                    if (result >= 0) {
+                        System.out.println(userResponse1 + " by " + userResponse2 + " has " + result + " plays.");
+                    } else {
+                        System.out.println("Unable to find that song in your library.");
+                    }
                 } else {
                     System.out.println("Please login");
                 }

@@ -195,4 +195,12 @@ public class UserModel {
     public String getRating(String input1, String input2) {
         return this.currUser.getRating(input1, input2);
     }
+
+    public boolean playASong(String songName, String artistName) {
+        return this.currUser.playASong(songName, artistName);
+    }
+
+    public int getPlays(String songName, String artistName) {
+        return this.currUser.getPlays(songName, artistName);
+    }
 }
