@@ -3,6 +3,10 @@ package src.model;
 import src.store.Album;
 import src.store.MusicStore;
 import src.store.Song;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import java.io.*;
@@ -68,7 +72,7 @@ public class UserModel {
                 // PrintWriter allows you to use familiar methods like print and println
                 PrintWriter myprintwriter = new PrintWriter(mybufferedwriter))
             {
-                String myString = username + " " + password + " " + salt; // TODO: Add hashing here
+                String myString = username + " " + hash(password + salt) + " " + salt; // TODO: Add hashing here
                 myprintwriter.print("\n");
                 myprintwriter.print(myString);
             } catch (IOException exception) {
@@ -77,7 +81,7 @@ public class UserModel {
             }
 
             // populate hashmaps
-            this.userPasswords.put(username, password);
+            this.userPasswords.put(username, hash(password + salt));
             LibraryModel newUserLibrary = new LibraryModel(musicStore);
             this.users.put(username, newUserLibrary);
             return "Successfully created account";
@@ -100,7 +104,7 @@ public class UserModel {
     // login as a registered user
     public String login(String username, String password) {
         if (userPasswords.containsKey(username)) {
-            if (userPasswords.get(username).equals(password)) { // TODO: Add hashing here
+            if (passwordCheck(username, password)) { // TODO: Add hashing here
                 currUser = users.get(username);
                 return "Successfully logged in as " + username;
             } else {
@@ -111,9 +115,24 @@ public class UserModel {
         }
     }
 
-    private boolean passwordCheck(String username, String password) {
+    private static String hash(String password) {
+        try {
+            StringBuilder hash = new StringBuilder();
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = md.digest(password.getBytes(StandardCharsets.UTF_8)); // Perform hash to get bytes
+            for (byte b : bytes) {
+                hash.append(Integer.toHexString(0xff & b)); // Convert bytes into hexadecimal strings (0xff is like a modulo)
+            }
+            return hash.toString();
 
-        return false;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean passwordCheck(String username, String password) {
+        //return password.equals(userPasswords.get(username));
+        return hash(password + userSalts.get(username)).equals(userPasswords.get(username));
     }
 
     public void logout() {
