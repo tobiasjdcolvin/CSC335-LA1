@@ -23,6 +23,7 @@ public class UserModel {
     public UserModel(MusicStore musicStore) {
         this.musicStore = musicStore;
         this.userPasswords = new HashMap<String, String>();
+        this.userSalts = new HashMap<String, String>();
         this.users = new HashMap<String, LibraryModel>();
 
         // populate userPasswords hashmap from UserStore file
