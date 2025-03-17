@@ -19,12 +19,19 @@ public class UserModel {
     private HashMap<String, String> userSalts;
     // keys: username, values: LibraryModel objects (basically all user info)
     private HashMap<String, LibraryModel> users;
+    private ArrayList<String> recentlyPlayed;
 
     public UserModel(MusicStore musicStore) {
         this.musicStore = musicStore;
         this.userPasswords = new HashMap<String, String>();
         this.userSalts = new HashMap<String, String>();
         this.users = new HashMap<String, LibraryModel>();
+        this.recentlyPlayed = new ArrayList<String>();
+
+        for (int i = 0; i < 10; i++) {
+            // For before the user has played 10 songs:
+            recentlyPlayed.add("No song");
+        }
 
         // populate userPasswords hashmap from UserStore file
         try {
@@ -219,7 +226,20 @@ public class UserModel {
     }
 
     public boolean playASong(String songName, String artistName) {
-        return this.currUser.playASong(songName, artistName);
+        boolean result = this.currUser.playASong(songName, artistName);
+        if (result == true) {
+            recentlyPlayed.add(0, songName + " by " + artistName);
+            recentlyPlayed.remove(10);
+        }
+        return result;
+    }
+
+    public String getRecentlyPlayed() {
+        String returnStr = "";
+        for (String s : recentlyPlayed) {
+            returnStr += s + "\n";
+        }
+        return returnStr.stripTrailing();
     }
 
     public int getPlays(String songName, String artistName) {
