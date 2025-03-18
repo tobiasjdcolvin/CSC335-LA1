@@ -44,8 +44,10 @@ public class View {
                 'get song rating': get the rating of a song from your library
                 'play song': play a song in your library
                 'get plays': get the number of plays a song in your library has
-                'recently played': get a list of recently played songs
-                'frequently played': get a list of frequently played songs
+                ---------------------------------------------------------------
+                SPECIAL PLAYLISTS:
+                'recently played': A playlist of recently played songs
+                'frequently played': A playlist of frequently played songs
                 """;
 
         String userInput = "";

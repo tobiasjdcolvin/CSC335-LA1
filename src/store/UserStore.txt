@@ -1,6 +1,2 @@
-testuser testpassword testsalt
-chris mynameischris chrissalt
-jonathan passwd 7[iNsuYpEw[t1|Ztvk1d2vQK>AY9BSY?o?<2b9d:FXXq[[Yl;9zf|Etq><=xkK/F
-plopman plop HEb6-;Lx,mA0]YlQ8h30rmyE'KHv-Mx.??>Qlkd'r]Do'[1;ecPmGekYPU-wIdRL
-sexy beast 4NT;|Q|VeBLcrTbkqu5[ioLqXlD5vn}DIX?AtCa7up,5HVJq}lo9l,whe03c3Ntx
 adam e852f536645fb7d63e2fa498fd4daf5b64977994a9326bf30e255d0aefb HEx;/=B<W-.}<bO}j|szd8W7q?5}<D<ki[EIMC3jbt2dh}NI709|7hIE;PeaS,{Q
+mr a932c01632e7c03c9442d9c99582b237b5eff4f8f519d55787d01fea4d3962 02<4<EItZo29am|MUQ=h;.eXrj=vy838ponZW2/FLg:ACnQRB044E0l4SdL<Je1U
