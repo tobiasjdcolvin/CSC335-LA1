@@ -45,6 +45,7 @@ public class View {
                 'play song': play a song in your library
                 'get plays': get the number of plays a song in your library has
                 'recently played': get a list of recently played songs
+                'frequently played': get a list of frequently played songs
                 """;
 
         String userInput = "";
@@ -97,6 +98,12 @@ public class View {
             }else if (userInput.equals("recently played")) {
                 if (model.getLoggedIn()) {
                     System.out.println(model.getRecentlyPlayed());
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("frequently played")) {
+                if (model.getLoggedIn()) {
+                    System.out.println(model.getFrequentlyPlayed());
                 } else {
                     System.out.println("Please login");
                 }
