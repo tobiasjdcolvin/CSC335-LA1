@@ -3,8 +3,8 @@ package src.model;
 import src.store.Album;
 import src.store.MusicStore;
 import src.store.Song;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import java.util.*;
 
 public class LibraryModel {
     private MusicStore store;
@@ -13,6 +13,7 @@ public class LibraryModel {
     private HashMap<String, ArrayList<Song>> songsByArtist;
     private HashMap<String, ArrayList<Album>> albumsByTitle;
     private HashMap<String, ArrayList<Album>> albumsByArtist;
+    private ArrayList<Song> frequentlyPlayedList;
 
     // playlists:
     private HashMap<String, Playlist> playlists;
@@ -35,6 +36,8 @@ public class LibraryModel {
 
         this.playlists = new HashMap<String, Playlist>();
         this.favorites = new ArrayList<Song>();
+
+        this.frequentlyPlayedList = new ArrayList<Song>();
     }
 
     /*=============================================================================================
@@ -268,6 +271,53 @@ public class LibraryModel {
         return (found != null);
     }
 
+    public ArrayList<String> updateFrequentlyPlayedList(String songName, String artistName) {
+        ArrayList<String> returnArr = new ArrayList<String>();
+        ArrayList<Song> frequentlyPlayedListSubList = new ArrayList<Song>();
+        boolean alreadyFound = false;
+        Song mySong = null;
+        for (Song s : this.songsByTitle.get(songName)) {
+            if (s.getArtist().equals(artistName)) {
+                // this means that s is the song we want.
+                mySong = s;
+            }
+        }
+        for (Song lists : this.frequentlyPlayedList) {
+            if (lists.getArtist().equals(artistName) && lists.getTitle().equals(songName)) {
+                // if the song is already in the list:
+                alreadyFound = true;
+            }
+        }
+
+        // if the sound is not already in the list, and the song is a valid object,
+        // add it to the list.
+        if (!alreadyFound && (mySong != null)) {
+            this.frequentlyPlayedList.add(mySong);
+        }
+
+        // every time a song is played, the list must be re-sorted:
+        Comparator songComparator = new CompareSongs();
+        Collections.sort(this.frequentlyPlayedList, songComparator);
+
+        // take the first 10 songs from the list, put into sublist
+        // and if the entire list is <= 10 songs, just copy the list
+        if (this.frequentlyPlayedList.size() <= 10) {
+            frequentlyPlayedListSubList = this.frequentlyPlayedList;
+        } else {
+            // have to do this because .subList() does not return an ArrayList.
+            List<Song> subListView = frequentlyPlayedList.subList(0, 11);
+            // creates an ArrayList instance from the List instance above.
+            frequentlyPlayedListSubList = new ArrayList<>(subListView);
+        }
+
+        // build ArrayList of strings to return:
+        for (Song fSong : frequentlyPlayedListSubList) {
+            String addStr = fSong.getTitle() + " by " + fSong.getArtist() + " - " + fSong.getPlays();
+            returnArr.add(addStr);
+        }
+
+        return returnArr;
+    }
 
     public boolean favoriteASong(String songName, String artistName) {
         songName = songName.toLowerCase();
@@ -408,7 +458,6 @@ public class LibraryModel {
 
     // Add a song from library to playlist
     // Returns true if song is added, false otherwise
-    // TODO: Add functionality if playlist is not found
     public boolean addSongToPlaylist (String songName, String artistName, String playlistName) {
         songName = songName.toLowerCase();
         artistName = artistName.toLowerCase();

@@ -16,14 +16,16 @@ import java.util.HashMap;
 public class UserModel {
     // current user (for logging in)
     private LibraryModel currUser = null;
-
     private MusicStore musicStore;
     // keys: username, values: password
     private HashMap<String, String> userPasswords;
+
     private HashMap<String, String> userSalts;
     // keys: username, values: LibraryModel objects (basically all user info)
     private HashMap<String, LibraryModel> users;
+
     private ArrayList<String> recentlyPlayed;
+    private ArrayList<String> frequentlyPlayed;
 
     public UserModel(MusicStore musicStore) {
         this.musicStore = musicStore;
@@ -31,6 +33,7 @@ public class UserModel {
         this.userSalts = new HashMap<String, String>();
         this.users = new HashMap<String, LibraryModel>();
         this.recentlyPlayed = new ArrayList<String>();
+        this.frequentlyPlayed = new ArrayList<String>();
 
         for (int i = 0; i < 10; i++) {
             // For before the user has played 10 songs:
@@ -246,17 +249,41 @@ public class UserModel {
 
     public boolean playASong(String songName, String artistName) {
         boolean result = this.currUser.playASong(songName, artistName);
+
         if (result == true) {
             recentlyPlayed.add(0, songName + " by " + artistName);
             recentlyPlayed.remove(10);
+            this.updateFrequentlyPlayed(songName, artistName);
         }
         return result;
+    }
+
+    private void updateFrequentlyPlayed(String songName, String artistName) {
+        this.frequentlyPlayed = currUser.updateFrequentlyPlayedList(songName, artistName);
     }
 
     public String getRecentlyPlayed() {
         String returnStr = "";
         for (String s : recentlyPlayed) {
+            if (!(s.equals("No song"))) {
+                returnStr += s + "\n";
+            }
+        }
+
+        if (returnStr.equals("")) {
+            return "No songs played yet";
+        }
+        return returnStr.stripTrailing();
+    }
+
+    public String getFrequentlyPlayed() {
+        String returnStr = "";
+        for (String s : this.frequentlyPlayed) {
             returnStr += s + "\n";
+        }
+
+        if (returnStr.equals("")) {
+            return "No songs played yet";
         }
         return returnStr.stripTrailing();
     }
