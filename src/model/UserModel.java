@@ -251,9 +251,33 @@ public class UserModel {
         boolean result = this.currUser.playASong(songName, artistName);
 
         if (result == true) {
-            recentlyPlayed.add(0, songName + " by " + artistName);
-            recentlyPlayed.remove(10);
+            this.recentlyPlayed.add(0, songName + " by " + artistName);
+            this.recentlyPlayed.remove(10);
             this.updateFrequentlyPlayed(songName, artistName);
+
+            // turn lists into playlists
+            // we have it so these calls replace the previous playlists
+            // of the following names with new, updated playlists.
+            currUser.createPlaylist("recently played");
+            currUser.createPlaylist("frequently played");
+
+            for (String rps : this.recentlyPlayed) {
+                if (!(rps.equals("No song"))) {
+                    String[] rpsSplit = rps.split(" by ");
+                    String rpsSong = rpsSplit[0];
+                    String rpsArtist = rpsSplit[1];
+
+                    currUser.addSongToPlaylist(rpsSong, rpsArtist, "recently played");
+                }
+            }
+
+            for (String fps : this.frequentlyPlayed) {
+                String[] fpsSplit = fps.split(" by ");
+                String fpsSong = fpsSplit[0];
+                String fpsArtist = fpsSplit[1];
+
+                currUser.addSongToPlaylist(fpsSong, fpsArtist, "frequently played");
+            }
         }
         return result;
     }

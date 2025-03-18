@@ -38,6 +38,9 @@ public class LibraryModel {
         this.favorites = new ArrayList<Song>();
 
         this.frequentlyPlayedList = new ArrayList<Song>();
+
+        this.createPlaylist("recently played");
+        this.createPlaylist("frequently played");
     }
 
     /*=============================================================================================
@@ -305,14 +308,14 @@ public class LibraryModel {
             frequentlyPlayedListSubList = this.frequentlyPlayedList;
         } else {
             // have to do this because .subList() does not return an ArrayList.
-            List<Song> subListView = frequentlyPlayedList.subList(0, 11);
+            List<Song> subListView = frequentlyPlayedList.subList(0, 10);
             // creates an ArrayList instance from the List instance above.
             frequentlyPlayedListSubList = new ArrayList<>(subListView);
         }
 
         // build ArrayList of strings to return:
         for (Song fSong : frequentlyPlayedListSubList) {
-            String addStr = fSong.getTitle() + " by " + fSong.getArtist() + " - " + fSong.getPlays();
+            String addStr = fSong.getTitle() + " by " + fSong.getArtist();
             returnArr.add(addStr);
         }
 
@@ -453,6 +456,9 @@ public class LibraryModel {
     }
 
     public void createPlaylist (String name) {
+        if (this.playlists.containsKey(name)) {
+            this.playlists.remove(name);
+        }
         this.playlists.put(name, new Playlist(name.toLowerCase()));
     }
 
