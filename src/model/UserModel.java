@@ -92,6 +92,7 @@ public class UserModel {
 
             // populate hashmaps
             this.userPasswords.put(username, hash(password + salt));
+            this.userSalts.put(username, salt);
             LibraryModel newUserLibrary = new LibraryModel(musicStore);
             this.users.put(username, newUserLibrary);
             return "Successfully created account";
