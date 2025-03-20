@@ -40,10 +40,32 @@ public class Playlist {
      *===========================================================================================*/
 
     public void addSong(Song song) {
-        songs.add(song);
+        boolean alreadyFound = false;
+        for (Song s : this.songs) {
+            if (s.getArtist().toLowerCase().equals(song.getArtist().toLowerCase()) &&
+            s.getTitle().toLowerCase().equals(song.getTitle().toLowerCase())) {
+                alreadyFound = true;
+            }
+        }
+
+        if (!alreadyFound) {
+            songs.add(song);
+        }
     }
     public void removeSong(Song song) {
-        songs.remove(song);
+        Song toRemove = null;
+        String title = song.getTitle().toLowerCase();
+        String artist = song.getArtist().toLowerCase();
+
+        for (Song s : songs) {
+            if (s.getTitle().toLowerCase().equals(title) && s.getArtist().toLowerCase().equals(artist)) {
+                toRemove = s;
+            }
+        }
+
+        if (toRemove != null) {
+            songs.remove(toRemove);
+        }
     }
 
     /*=============================================================================================

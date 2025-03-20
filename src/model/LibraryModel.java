@@ -577,27 +577,201 @@ public class LibraryModel {
     public boolean removeSongFromPlaylist (String songName, String artistName, String playlistName) {
         songName = songName.toLowerCase();
         artistName = artistName.toLowerCase();
-        playlistName = playlistName.toLowerCase();
 
         // find playlist
         Playlist playlist = this.playlists.get(playlistName);
         if (playlist == null) {
             return false;
         }
+        Song toRemoveS = null;
         // Iterate and remove song
         for (Song song : playlist.getSongs()) {
             if (song.getArtist().equals(artistName) && song.getTitle().equals(songName)) {
-                playlist.removeSong(song);
-                return true;
+                toRemoveS = song;
             }
+        }
+        if (toRemoveS != null) {
+            playlist.removeSong(toRemoveS);
+            return true;
         }
         return false;
     }
 
+    public String removeSong(String title, String artist) {
+        title = title.toLowerCase();
+        artist = artist.toLowerCase();
+
+        // for songsByTitle:
+        if (songsByTitle.containsKey(title)) {
+            // if there is only one song with the title, remove the whole key-value pair,
+            // if the song has the matching artist as expected
+            if (songsByTitle.get(title).size() == 1) {
+                if (songsByTitle.get(title).get(0).getArtist().toLowerCase().equals(artist)) {
+                    songsByTitle.remove(title);
+                } else {
+                    return "Unable to remove song";
+                }
+                // if there is more than one song of the same title, handle that:
+            } else {
+                // check all songs to find the one with the matching artist to remove
+                Song toRemoveS = null;
+                for (Song s : songsByTitle.get(title)) {
+                    if (s.getArtist().toLowerCase().equals(artist)) {
+                        toRemoveS = s;
+                    }
+                }
+                if (toRemoveS != null) {
+                    songsByTitle.get(title).remove(toRemoveS);
+                } else {
+                    return "Unable to remove song";
+                }
+            }
+        }
+
+        // for songsByArtist:
+        if (songsByArtist.containsKey(artist)) {
+            if (songsByArtist.get(artist).size() == 1) {
+                // if the artist has 1 song, remove the entire key-value pair if the song is the
+                // expected one to remove.
+                if (songsByArtist.get(artist).get(0).getTitle().equals(title)) {
+                    songsByArtist.remove(artist);
+                } else {
+                    return "Unable to remove song";
+                }
+            } else {
+                Song toRemoveS = null;
+                for (Song s : songsByArtist.get(artist)) {
+                    if (s.getTitle().equals(title)) {
+                        toRemoveS = s;
+                    }
+                }
+
+                if (toRemoveS != null) {
+                    // remove the song if found
+                    songsByArtist.get(artist).remove(toRemoveS);
+                } else {
+                    return "Unable to remove song";
+                }
+            }
+        }
+
+        // for frequentlyPlayedList:
+        if (frequentlyPlayedList.size() > 0) {
+            Song foundS = null;
+            for (Song s: frequentlyPlayedList) {
+                if (s.getTitle().toLowerCase().equals(title) && s.getArtist().toLowerCase().equals(artist)) {
+                    foundS = s;
+                }
+            }
+            if (foundS != null) {
+                frequentlyPlayedList.remove(foundS);
+            }
+        }
+
+        // for each playlist
+        for (String pName : playlists.keySet()) {
+            removeSongFromPlaylist(title, artist, pName);
+        }
+
+        // for favorites:
+        if (favorites.size() > 0) {
+            Song foundS = null;
+            for (Song s: favorites) {
+                if (s.getTitle().toLowerCase().equals(title) && s.getArtist().toLowerCase().equals(artist)) {
+                    foundS = s;
+                }
+            }
+            if (foundS != null) {
+                favorites.remove(foundS);
+            }
+        }
+
+        // for each album, remove the song if it exists in the album:
+        for (ArrayList<Album> alList : this.albumsByTitle.values()) {
+            for (Album al : alList) {
+                al.removeSong(title, artist);
+            }
+        }
+
+        return "Successfully removed " + title + " by " + artist;
+    }
+
+    public String removeAlbum(String name, String artist) {
+        ArrayList<Song> songsToRemove = new ArrayList<Song>();
+        name = name.toLowerCase();
+        artist = artist.toLowerCase();
+
+        // for albumsByTitle:
+        if (albumsByTitle.containsKey(name)) {
+            // store all the songs in the album before deleting the album,
+            // so the songs can individually be deleted later.
+            for (Album al : albumsByTitle.get(name)) {
+                if (al.getArtist().toLowerCase().equals(artist)) {
+                    // store each of the songs:
+                    for (Song s : al.getSongs()) {
+                        songsToRemove.add(s);
+                    }
+                }
+            }
+
+            // if there is only one album with the title, remove the whole key-value pair,
+            // if the album has the matching artist as expected
+            if (albumsByTitle.get(name).size() == 1) {
+                if (albumsByTitle.get(name).get(0).getArtist().toLowerCase().equals(artist)) {
+                    albumsByTitle.remove(name);
+                } else {
+                    return "Unable to remove album";
+                }
+                // if there is more than one album of the same title, handle that:
+            } else {
+                // check all albums to find the one with the matching artist to remove
+                Album toRemoveA = null;
+                for (Album a : albumsByTitle.get(name)) {
+                    if (a.getArtist().toLowerCase().equals(artist)) {
+                        toRemoveA = a;
+                    }
+                }
+                if (toRemoveA != null) {
+                    albumsByTitle.get(name).remove(toRemoveA);
+                } else {
+                    return "Unable to remove album";
+                }
+            }
+        }
+
+        // for albumsByArtist:
+        if (albumsByArtist.containsKey(artist)) {
+            if (albumsByArtist.get(artist).size() == 1) {
+                // if the artist has 1 album, remove the entire key-value pair if the album is the
+                // expected one to remove.
+                if (albumsByArtist.get(artist).get(0).getTitle().equals(name)) {
+                    albumsByArtist.remove(artist);
+                } else {
+                    return "Unable to remove album";
+                }
+            } else {
+                Album toRemoveA = null;
+                for (Album a : albumsByArtist.get(artist)) {
+                    if (a.getTitle().equals(name)) {
+                        toRemoveA = a;
+                    }
+                }
+
+                if (toRemoveA != null) {
+                    // remove the album if found
+                    albumsByArtist.get(artist).remove(toRemoveA);
+                } else {
+                    return "Unable to remove album";
+                }
+            }
+        }
+
+        // remove each of the songs that were in the album:
+        for (Song s : songsToRemove) {
+            this.removeSong(s.getTitle().toLowerCase(), s.getArtist().toLowerCase());
+        }
+
+        return "Successfully removed " + name + " by " + artist;
+    }
 
 }
-
-
-
-
-

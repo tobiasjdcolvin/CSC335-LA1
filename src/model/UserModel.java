@@ -317,6 +317,7 @@ public class UserModel {
         return this.currUser.getPlays(songName, artistName);
     }
 
+
     public ArrayList<String> getSongsByTitleSorted() {
         return this.currUser.getSongsByTitleSorted();
     }
@@ -325,5 +326,13 @@ public class UserModel {
     }
     public ArrayList<String> getSongsByRatingSorted() {
         return this.currUser.getSongsByRatingSorted();
+
+    public String removeSong(String title, String artist) {
+        return currUser.removeSong(title, artist);
+    }
+
+    public String removeAlbum(String name, String artist) {
+        return currUser.removeAlbum(name, artist);
+
     }
 }
