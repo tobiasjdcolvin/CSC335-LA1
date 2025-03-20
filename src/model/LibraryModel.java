@@ -49,6 +49,84 @@ public class LibraryModel {
      *
      *===========================================================================================*/
 
+    // returns an ArrayList of song's sorted by title
+    public ArrayList<String> getSongsByTitleSorted() {
+        ArrayList<Song> songs = new ArrayList<>();
+
+        for (String title : this.songsByTitle.keySet()) {
+            songs.addAll(this.songsByTitle.get(title));
+        }
+
+        songs.sort(new CompareSongsByTitle());
+
+        ArrayList<String> ret = new ArrayList<>();
+
+        for (Song song : songs) {
+            ret.add(song.toString());
+        }
+
+        return ret;
+    }
+
+    // Helper classes for comparison
+    private class CompareSongsByTitle implements Comparator<Song> {
+        public int compare(Song s1, Song s2) {
+            return s1.getTitle().compareTo(s2.getTitle());
+        }
+    }
+
+    // returns an ArrayList of song's sorted by title
+    public ArrayList<String> getSongsByArtistSorted() {
+        ArrayList<Song> songs = new ArrayList<>();
+
+        for (String title : this.songsByTitle.keySet()) {
+            songs.addAll(this.songsByTitle.get(title));
+        }
+
+        songs.sort(new CompareSongsByArtist());
+
+        ArrayList<String> ret = new ArrayList<>();
+
+        for (Song song : songs) {
+            ret.add(song.toString());
+        }
+
+        return ret;
+    }
+
+    // Helper classes for comparison
+    private class CompareSongsByArtist implements Comparator<Song> {
+        public int compare(Song s1, Song s2) {
+            return s1.getArtist().compareTo(s2.getArtist());
+        }
+    }
+
+    // returns an ArrayList of song's sorted by rating
+    public ArrayList<String> getSongsByRatingSorted() {
+        ArrayList<Song> songs = new ArrayList<>();
+
+        for (String title : this.songsByTitle.keySet()) {
+            songs.addAll(this.songsByTitle.get(title));
+        }
+
+        songs.sort(new CompareSongsByRating());
+
+        ArrayList<String> ret = new ArrayList<>();
+
+        for (Song song : songs) {
+            ret.add(song.toString());
+        }
+
+        return ret;
+    }
+
+    // Helper classes for comparison
+    private class CompareSongsByRating implements Comparator<Song> {
+        public int compare(Song s1, Song s2) {
+            return s1.getRating() - s2.getRating();
+        }
+    }
+
     // returns an ArrayList of song info if found, empty ArrayList if not
     public ArrayList<String> getSongsByTitle(String songTitle) {
         songTitle = songTitle.toLowerCase();

@@ -44,8 +44,12 @@ public class View {
                 'get song rating': get the rating of a song from your library
                 'play song': play a song in your library
                 'get plays': get the number of plays a song in your library has
+                'sort songs by title' : get songs in your library sorted by title
+                'sort songs by artist' : get songs in your library sorted by artist
+                'sort songs by rating' : get songs in your library sorted by rating
                 'remove song': removes a song from your library
                 'remove album': removes an album (and all the songs in it) from your library
+
                 ---------------------------------------------------------------
                 SPECIAL PLAYLISTS:
                 'recently played': A playlist of recently played songs
@@ -457,6 +461,32 @@ public class View {
                 } else {
                     System.out.println("Please login");
                 }
+
+            }else if (userInput.equals("sort songs by title")) {
+                if (model.getLoggedIn()) {
+                    ArrayList<String> result = model.getSongsByTitleSorted();
+                    for (String s : result) {
+                        System.out.println(s);
+                    }
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("sort songs by artist")) {
+                if (model.getLoggedIn()) {
+                    ArrayList<String> result = model.getSongsByArtistSorted();
+                    for (String s : result) {
+                        System.out.println(s);
+                    }
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("sort songs by rating")) {
+                if (model.getLoggedIn()) {
+                    ArrayList<String> result = model.getSongsByRatingSorted();
+                    for (String s : result) {
+                        System.out.println(s);
+                    }
+
             }else if (userInput.equals("remove song")) {
                 if (model.getLoggedIn()) {
                     System.out.println("Enter the title of the song you want to remove:");
@@ -478,6 +508,7 @@ public class View {
 
                     String result = model.removeAlbum(userResponse1, userResponse2);
                     System.out.println(result);
+
                 } else {
                     System.out.println("Please login");
                 }
