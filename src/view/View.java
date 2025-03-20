@@ -44,6 +44,8 @@ public class View {
                 'get song rating': get the rating of a song from your library
                 'play song': play a song in your library
                 'get plays': get the number of plays a song in your library has
+                'remove song': removes a song from your library
+                'remove album': removes an album (and all the songs in it) from your library
                 ---------------------------------------------------------------
                 SPECIAL PLAYLISTS:
                 'recently played': A playlist of recently played songs
@@ -452,6 +454,30 @@ public class View {
 
                 String result = model.getRating(userResponse1, userResponse2);
                 System.out.println(result);
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("remove song")) {
+                if (model.getLoggedIn()) {
+                    System.out.println("Enter the title of the song you want to remove:");
+                    String userResponse1 = scanner.nextLine();
+                    System.out.println("Enter the name of the artist of the song you want to remove:");
+                    String userResponse2 = scanner.nextLine();
+
+                    String result = model.removeSong(userResponse1, userResponse2);
+                    System.out.println(result);
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("remove album")) {
+                if (model.getLoggedIn()) {
+                    System.out.println("Enter the name of the album you want to remove:");
+                    String userResponse1 = scanner.nextLine();
+                    System.out.println("Enter the name of the artist of the album you want to remove:");
+                    String userResponse2 = scanner.nextLine();
+
+                    String result = model.removeAlbum(userResponse1, userResponse2);
+                    System.out.println(result);
                 } else {
                     System.out.println("Please login");
                 }
