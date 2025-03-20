@@ -316,4 +316,14 @@ public class UserModel {
     public int getPlays(String songName, String artistName) {
         return this.currUser.getPlays(songName, artistName);
     }
+
+    public ArrayList<String> getSongsByTitleSorted() {
+        return this.currUser.getSongsByTitleSorted();
+    }
+    public ArrayList<String> getSongsByArtistSorted() {
+        return this.currUser.getSongsByArtistSorted();
+    }
+    public ArrayList<String> getSongsByRatingSorted() {
+        return this.currUser.getSongsByRatingSorted();
+    }
 }
