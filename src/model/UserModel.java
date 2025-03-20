@@ -316,4 +316,12 @@ public class UserModel {
     public int getPlays(String songName, String artistName) {
         return this.currUser.getPlays(songName, artistName);
     }
+
+    public String removeSong(String title, String artist) {
+        return currUser.removeSong(title, artist);
+    }
+
+    public String removeAlbum(String name, String artist) {
+        return currUser.removeAlbum(name, artist);
+    }
 }

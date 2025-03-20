@@ -62,6 +62,19 @@ public class Album {
         return songs;
     }
 
+    public void removeSong(String title, String artist) {
+        Song sToRemove = null;
+        for (Song s : this.songs) {
+            if(s.getTitle().toLowerCase().equals(title.toLowerCase()) && s.getArtist().toLowerCase()
+                    .equals(artist.toLowerCase())) {
+                sToRemove = s;
+            }
+        }
+        if (sToRemove != null) {
+            this.songs.remove(sToRemove);
+        }
+    }
+
     /*=============================================================================================
      *
      * Overrides
