@@ -21,6 +21,9 @@ public class LibraryModel {
     // list of favorite songs:
     private ArrayList<Song> favorites;
 
+    // Used to keep track of songs by genre
+    private final HashMap<String, Playlist> genreTracker;
+
     /*=============================================================================================
      *
      * Constructors
@@ -35,8 +38,14 @@ public class LibraryModel {
         this.songsByArtist = new HashMap<String, ArrayList<Song>>();
         this.albumsByTitle = new HashMap<String, ArrayList<Album>>();
         this.albumsByArtist = new HashMap<String, ArrayList<Album>>();
+        this.genreTracker = new HashMap<String, Playlist>();
 
         this.playlists = new HashMap<String, Playlist>();
+        this.playlists.put("PreGenerated: Favorite Songs", new Playlist("PreGenerated: Favorite Songs"));
+        this.playlists.put("PreGenerated: Top Rated Songs", new Playlist("PreGenerated: Top Rated Songs"));
+
+
+
         this.favorites = new ArrayList<Song>();
 
         this.frequentlyPlayedList = new ArrayList<Song>();
@@ -345,6 +354,28 @@ public class LibraryModel {
                 songsByTitle.put(songName, new ArrayList<Song>());
             }
             songsByTitle.get(songName).add(new Song(found));
+        }
+
+        // Add song to playlist
+        Album foundAlbum = null;
+        if (found != null) {
+            ArrayList<Album> albums = store.getAlbumsByTitle(found.getAlbum());
+
+            for (Album album : albums) {
+                if (album.getArtist().equals(found.getArtist())) {
+                    foundAlbum = album;
+                    break;
+                }
+            }
+        }
+        if (foundAlbum != null) {
+            if (!this.genreTracker.containsKey("genre:"+foundAlbum.getGenre())) {
+                this.genreTracker.put("genre:"+foundAlbum.getGenre(), new Playlist("genre:"+foundAlbum.getGenre()));
+            }
+            this.genreTracker.get("genre:"+foundAlbum.getGenre()).addSong(found);
+            if (this.genreTracker.get("genre:"+foundAlbum.getGenre()).getSongs().size() >= 10) {
+                this.playlists.put("genre:"+foundAlbum.getGenre(), this.genreTracker.get("genre:"+foundAlbum.getGenre()));
+            }
         }
 
         // returns true if found and false if null

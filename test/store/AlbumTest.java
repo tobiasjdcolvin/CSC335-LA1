@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class AlbumTest {
-    private final Album album = new Album("Bum Comma Al", "Bum Al");
+    private final Album album = new Album("Bum Comma Al", "Bum Al", "Albius bumbius");
 
     @Test
     public void testStrungOut() {

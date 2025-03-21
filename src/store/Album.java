@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class Album {
     private final String title;
     private final String artist;
-    private ArrayList<Song> songs;
+    private final String genre;
+    private final ArrayList<Song> songs;
 
     /*=============================================================================================
      *
@@ -14,9 +15,10 @@ public class Album {
      *===========================================================================================*/
 
     // Main constructor
-    public Album(String title, String artist) {
+    public Album(String title, String artist, String genre) {
         this.title = title;
         this.artist = artist;
+        this.genre = genre;
         this.songs = new ArrayList<Song>();
     }
 
@@ -24,6 +26,7 @@ public class Album {
     public Album(Album album) {
         this.title = album.getTitle();
         this.artist = album.getArtist();
+        this.genre = album.getGenre();
         this.songs = new ArrayList<Song>();
 
         // Make deep copy of songs
@@ -54,6 +57,7 @@ public class Album {
     public String getArtist() {
         return this.artist;
     }
+    public String getGenre() {return this.genre; }
     public ArrayList<Song> getSongs() {
         ArrayList<Song> songs = new ArrayList<Song>();
         for (Song song : this.songs) {
