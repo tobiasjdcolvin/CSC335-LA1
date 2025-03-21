@@ -335,4 +335,12 @@ public class UserModel {
         return currUser.removeAlbum(name, artist);
 
     }
+
+    public String shuffleLibrary() {
+        return currUser.shuffleLibrary();
+    }
+
+    public String shufflePlaylist(String playlistName) {
+        return currUser.shufflePlaylist(playlistName);
+    }
 }

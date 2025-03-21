@@ -49,7 +49,8 @@ public class View {
                 'sort songs by rating' : get songs in your library sorted by rating
                 'remove song': removes a song from your library
                 'remove album': removes an album (and all the songs in it) from your library
-
+                'shuffle library': shuffles all of the songs in your library
+                'shuffle playlist': shuffles the songs in a specified playlist in your library
                 ---------------------------------------------------------------
                 SPECIAL PLAYLISTS:
                 'recently played': A playlist of recently played songs
@@ -486,6 +487,22 @@ public class View {
                     for (String s : result) {
                         System.out.println(s);
                     }
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("shuffle library")) {
+                if (model.getLoggedIn()) {
+                    String result = model.shuffleLibrary();
+                    System.out.println(result);
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("shuffle playlist")) {
+                if (model.getLoggedIn()) {
+                    System.out.println("Enter the name of the playlist you want to shuffle:");
+                    String userResponse = scanner.nextLine();
+                    String result = model.shufflePlaylist(userResponse);
+                    System.out.println(result);
                 } else {
                     System.out.println("Please login");
                 }

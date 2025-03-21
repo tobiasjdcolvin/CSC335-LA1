@@ -2,6 +2,7 @@ package src.model;
 
 import src.store.Song;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Playlist {
     private String name;
@@ -66,6 +67,11 @@ public class Playlist {
         if (toRemove != null) {
             songs.remove(toRemove);
         }
+    }
+
+    public void shuffle() {
+        Collections.shuffle(this.songs);
+        Collections.shuffle(this.songs);
     }
 
     /*=============================================================================================

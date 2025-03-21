@@ -12,6 +12,7 @@ public class LibraryModel {
     private HashMap<String, ArrayList<Song>> songsByTitle;
     private HashMap<String, ArrayList<Song>> songsByArtist;
     private HashMap<String, ArrayList<Album>> albumsByTitle;
+    private ArrayList<String> songTitlesList;
     private HashMap<String, ArrayList<Album>> albumsByArtist;
     private ArrayList<Song> frequentlyPlayedList;
 
@@ -30,6 +31,7 @@ public class LibraryModel {
         this.store = store;
 
         this.songsByTitle = new HashMap<String, ArrayList<Song>>();
+        this.songTitlesList = new ArrayList<String>();
         this.songsByArtist = new HashMap<String, ArrayList<Song>>();
         this.albumsByTitle = new HashMap<String, ArrayList<Album>>();
         this.albumsByArtist = new HashMap<String, ArrayList<Album>>();
@@ -273,11 +275,8 @@ public class LibraryModel {
     /* "get a list of items from the library" - from the spec */
     // get a 'list' of song titles:
     public ArrayList<String> getSongTitles() {
-        ArrayList<String> returnLst = new ArrayList<String>();
-        for (String title : songsByTitle.keySet()) {
-            returnLst.add(title);
-        }
-        return returnLst;
+        this.updateSongTitlesList();
+        return this.songTitlesList;
     }
 
     // get a 'list' of artists
@@ -774,4 +773,31 @@ public class LibraryModel {
         return "Successfully removed " + name + " by " + artist;
     }
 
+    public String shuffleLibrary() {
+        for (String title : songsByTitle.keySet()) {
+            if (!(this.songTitlesList.contains(title))) {
+                this.songTitlesList.add(title);
+            }
+        }
+        Collections.shuffle(songTitlesList);
+        Collections.shuffle(songTitlesList);
+        return "Successfully shuffled library";
+    }
+
+    private void updateSongTitlesList() {
+        for (String title : songsByTitle.keySet()) {
+            if (!(this.songTitlesList.contains(title))) {
+                this.songTitlesList.add(title);
+            }
+        }
+    }
+
+    public String shufflePlaylist(String playlistName) {
+        if (this.playlists.containsKey(playlistName)) {
+            this.playlists.get(playlistName).shuffle();
+            return "Successfully shuffled playlist: " + playlistName;
+        } else {
+            return "Unable to find playlist: " + playlistName;
+        }
+    }
 }
