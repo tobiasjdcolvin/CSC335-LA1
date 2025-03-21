@@ -829,4 +829,29 @@ public class LibraryModel {
             return "Unable to find playlist: " + playlistName;
         }
     }
+
+    public String albumOfSong(String title, String artist) {
+        title = title.toLowerCase();
+        artist = artist.toLowerCase();
+
+        // check if the song exists in the library:
+        ArrayList<String> potentialSongs = this.getSongsByTitle(title);
+        if (potentialSongs.size() < 1) {
+            return "";
+        } else {
+            for (Song s : this.songsByTitle.get(title)) {
+                // this means that s is the song we want.
+                if (s.getArtist().equals(artist)) {
+                    // find the exact album
+                    for (Album al : this.albumsByTitle.get(s.getAlbum())) {
+                        if (al.getArtist().equals(artist)) {
+                            // this means that al is the album we want.
+                            return al.toString() + "\n\nThis album is in your library.";
+                        }
+                    }
+                }
+            }
+        }
+        return "";
+    }
 }
