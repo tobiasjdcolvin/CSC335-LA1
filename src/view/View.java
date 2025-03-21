@@ -486,7 +486,9 @@ public class View {
                     for (String s : result) {
                         System.out.println(s);
                     }
-
+                } else {
+                    System.out.println("Please login");
+                }
             }else if (userInput.equals("remove song")) {
                 if (model.getLoggedIn()) {
                     System.out.println("Enter the title of the song you want to remove:");
