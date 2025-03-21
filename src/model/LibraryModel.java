@@ -123,7 +123,7 @@ public class LibraryModel {
     // Helper classes for comparison
     private class CompareSongsByRating implements Comparator<Song> {
         public int compare(Song s1, Song s2) {
-            return s1.getRating() - s2.getRating();
+            return -1*(s1.getRating() - s2.getRating());
         }
     }
 
