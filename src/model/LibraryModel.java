@@ -41,10 +41,6 @@ public class LibraryModel {
         this.genreTracker = new HashMap<String, Playlist>();
 
         this.playlists = new HashMap<String, Playlist>();
-        this.playlists.put("PreGenerated: Favorite Songs", new Playlist("PreGenerated: Favorite Songs"));
-        this.playlists.put("PreGenerated: Top Rated Songs", new Playlist("PreGenerated: Top Rated Songs"));
-
-
 
         this.favorites = new ArrayList<Song>();
 
@@ -52,6 +48,8 @@ public class LibraryModel {
 
         this.createPlaylist("recently played");
         this.createPlaylist("frequently played");
+        this.createPlaylist("favorite songs");
+        this.createPlaylist("top rated songs");
     }
 
     /*=============================================================================================
