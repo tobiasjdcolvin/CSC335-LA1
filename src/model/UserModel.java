@@ -326,7 +326,7 @@ public class UserModel {
     }
     public ArrayList<String> getSongsByRatingSorted() {
         return this.currUser.getSongsByRatingSorted();
-
+    }
     public String removeSong(String title, String artist) {
         return currUser.removeSong(title, artist);
     }
