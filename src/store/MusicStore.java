@@ -54,9 +54,10 @@ public class MusicStore {
                     String[] splitLine = currLine.split(",");
                     String currAlbumTitle = splitLine[0];
                     String currArtistName = splitLine[1];
+                    String currGenreName = splitLine[2];
 
                     // create an Album object to then use for the album related hashmaps
-                    Album currAlbum = new Album(currAlbumTitle, currArtistName);
+                    Album currAlbum = new Album(currAlbumTitle, currArtistName, currGenreName);
 
                     // put initial info into album hashmaps
                     if (!this.albumsByTitle.containsKey(currAlbumTitle)) {
