@@ -313,6 +313,9 @@ public class UserModel {
         return returnStr.stripTrailing();
     }
 
+    public String albumOfSong(String title, String artist) {
+        return currUser.albumOfSong(title, artist);
+    }
 
     public int getPlays(String songName, String artistName) {
         return this.currUser.getPlays(songName, artistName);

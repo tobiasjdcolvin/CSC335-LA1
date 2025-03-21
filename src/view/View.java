@@ -51,10 +51,13 @@ public class View {
                 'remove album': removes an album (and all the songs in it) from your library
                 'shuffle library': shuffles all of the songs in your library
                 'shuffle playlist': shuffles the songs in a specified playlist in your library
+                'album of song': get the album information of a song in your library
                 ---------------------------------------------------------------
                 SPECIAL PLAYLISTS:
                 'recently played': A playlist of recently played songs
                 'frequently played': A playlist of frequently played songs
+                'favorite songs': A playlist of favorite songs
+                'top rated songs': A playist of top rated songs
                 """;
 
         String userInput = "";
@@ -255,6 +258,22 @@ public class View {
                 } else {
                     System.out.println("Unable to find that song in the music store.");
                 }
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("album of song")) {
+                if (model.getLoggedIn()) {
+                    System.out.println("Enter the title of the song you want to find album information for:");
+                    String userResponse1 = scanner.nextLine();
+                    System.out.println("Enter the name of the artist of the song you want to find album information for:");
+                    String userResponse2 = scanner.nextLine();
+
+                    String result = model.albumOfSong(userResponse1, userResponse2);
+                    if (!(result.equals(""))) {
+                        System.out.println(result);
+                    } else {
+                        System.out.println("Unable to find that song in your library");
+                    }
                 } else {
                     System.out.println("Please login");
                 }
