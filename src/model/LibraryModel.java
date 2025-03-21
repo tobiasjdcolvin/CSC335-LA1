@@ -354,7 +354,7 @@ public class LibraryModel {
             songsByTitle.get(songName).add(new Song(found));
         }
 
-        // Add song to playlist
+        // Add song to playlist by genre
         Album foundAlbum = null;
         if (found != null) {
             ArrayList<Album> albums = store.getAlbumsByTitle(found.getAlbum());
@@ -371,10 +371,12 @@ public class LibraryModel {
                 this.genreTracker.put("genre:"+foundAlbum.getGenre(), new Playlist("genre:"+foundAlbum.getGenre()));
             }
             this.genreTracker.get("genre:"+foundAlbum.getGenre()).addSong(found);
-            if (this.genreTracker.get("genre:"+foundAlbum.getGenre()).getSongs().size() >= 10) {
+            if (this.genreTracker.get("genre:"+foundAlbum.getGenre()).getSongs().size() >= 10 && !this.playlists.containsKey("genre:"+foundAlbum.getGenre())) {
                 this.playlists.put("genre:"+foundAlbum.getGenre(), this.genreTracker.get("genre:"+foundAlbum.getGenre()));
             }
         }
+
+
 
         // returns true if found and false if null
         return (found != null);
@@ -444,10 +446,12 @@ public class LibraryModel {
                     if (!favorites.contains(s)){
                         favorites.add(s);
                     }
+                    this.playlists.get("favorite songs").addSong(s);
                     return true;
                 }
             }
         }
+
 
         return false;
     }
@@ -519,6 +523,7 @@ public class LibraryModel {
                         this.favoriteASong(songName, artistName);
                     }
                     s.setRating(actualRating);
+                    if (actualRating >= 4) this.playlists.get("top rated songs").addSong(s);
                     return true;
                 }
             }
