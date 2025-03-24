@@ -771,20 +771,6 @@ public class LibraryModel {
                 } else {
                     return "Unable to remove album";
                 }
-                // if there is more than one album of the same title, handle that:
-            } else {
-                // check all albums to find the one with the matching artist to remove
-                Album toRemoveA = null;
-                for (Album a : albumsByTitle.get(name)) {
-                    if (a.getArtist().toLowerCase().equals(artist)) {
-                        toRemoveA = a;
-                    }
-                }
-                if (toRemoveA != null) {
-                    albumsByTitle.get(name).remove(toRemoveA);
-                } else {
-                    return "Unable to remove album";
-                }
             }
         }
 

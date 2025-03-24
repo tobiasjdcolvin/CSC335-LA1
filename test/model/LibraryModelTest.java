@@ -83,12 +83,47 @@ public class LibraryModelTest {
     }
 
     @Test
+    public void testAddSongToPlayListWhenPlaylistNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        boolean result = testModel.addSongToPlaylist("tired", "adele", "NOT A PLAYLIST");
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testAddSongToPlayListWhenSongNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        boolean result = testModel.addSongToPlaylist("NOT A SONG", "adele", "frequently played");
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testGetPlaysMore() {
+        testModel.addAlbumToLibrary("19", "adele");
+        int result1 = testModel.getPlays("tired", "adele");
+        Assert.assertEquals(0, result1);
+        testModel.playASong("tired", "adele");
+        int result2 = testModel.getPlays("tired", "adele");
+        Assert.assertEquals(1, result2);
+        int result3 = testModel.getPlays("NOT A SONG", "adele");
+        Assert.assertEquals(-1, result3);
+        int result4 = testModel.getPlays("tired", "NOT AN ARTIST");
+        Assert.assertEquals(-1, result4);
+    }
+
+    @Test
+    public void testAddSongToPlayListWhenArtistNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        boolean result = testModel.addSongToPlaylist("tired", "NOT AN ARTIST", "frequently played");
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
     public void testRemoveSongFromPlaylist() {
         testModel.addAlbumToLibrary("19", "adele");
         testModel.createPlaylist("bog of dreams");
         testModel.addSongToPlaylist("tired", "adele", "bog of dreams");
         ArrayList<String> result = testModel.getPlaylists();
-        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(6, result.size());
         testModel.removeSongFromPlaylist("tired", "adele", "bog of dreams");
         testModel.removeSongFromPlaylist("tired", "adele", "not a playlist");
         testModel.removeSongFromPlaylist("tired", "poopdog", "bog of dreams");
@@ -138,7 +173,70 @@ public class LibraryModelTest {
         testModel.createPlaylist("bog of dreams");
         testModel.addSongToPlaylist("tired", "adele", "bog of dreams");
         ArrayList<String> result = testModel.getPlaylists();
-        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(6, result.size());
+    }
+
+    @Test
+    public void testGetSongsByTitleSorted() {
+        testModel.addAlbumToLibrary("19", "adele");
+        Assert.assertEquals(12, testModel.getSongsByTitleSorted().size());
+    }
+
+    @Test
+    public void testGetSongsByArtistSorted() {
+        testModel.addAlbumToLibrary("19", "adele");
+        Assert.assertEquals(12, testModel.getSongsByArtistSorted().size());
+    }
+
+    @Test
+    public void testGetSongsByRatingSorted() {
+        testModel.addAlbumToLibrary("19", "adele");
+        Assert.assertEquals(12, testModel.getSongsByRatingSorted().size());
+    }
+
+    @Test
+    public void testPlaySong() {
+        testModel.addAlbumToLibrary("19", "adele");
+        boolean result = testModel.playASong("tired", "adele");
+        Assert.assertEquals(true, result);
+    }
+
+    @Test
+    public void testPlaySongIfNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        boolean result = testModel.playASong("NOT A SONG", "adele");
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testPlaySongIfArtistNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        boolean result = testModel.playASong("tired", "NOT AN ARTIST");
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testUpdateFrequentlyPlayedList() {
+        testModel.addAlbumToLibrary("19", "adele");
+        boolean firstPlayResult = testModel.playASong("tired", "adele");
+        ArrayList<String> firstUpdateResult = testModel.updateFrequentlyPlayedList("tired", "adele");
+        boolean secondPlayResult = testModel.playASong("tired", "adele");
+        ArrayList<String> secondUpdateResult = testModel.updateFrequentlyPlayedList("tired", "adele");
+        Assert.assertEquals(true, firstPlayResult);
+        Assert.assertEquals(true, secondPlayResult);
+        Assert.assertEquals(true, firstUpdateResult != null);
+        Assert.assertEquals(true, firstUpdateResult.size() > 0);
+        Assert.assertEquals(true, secondUpdateResult != null);
+        Assert.assertEquals(true, secondUpdateResult.size() > 0);
+        Assert.assertEquals(true, firstUpdateResult.contains("tired by adele"));
+    }
+
+    @Test
+    public void testGetPlays() {
+        testModel.addAlbumToLibrary("19", "adele");
+        boolean result = testModel.playASong("tired", "adele");
+        boolean result2 = testModel.playASong("tired", "adele");
+        Assert.assertEquals(2, testModel.getPlays("tired", "adele"));
     }
 
     @Test
@@ -165,6 +263,14 @@ public class LibraryModelTest {
     }
 
     @Test
+    public void testCreatePlaylistTwice() {
+        testModel.createPlaylist("a");
+        testModel.createPlaylist("a");
+        String result = testModel.getPlaylistByName("a");
+        Assert.assertEquals(true, !(result.equals("")));
+    }
+
+    @Test
     public void testGetArtists() {
         testModel.addAlbumToLibrary("19", "adele");
         ArrayList<String> result = testModel.getArtists();
@@ -186,6 +292,121 @@ public class LibraryModelTest {
         testModel.addAlbumToLibrary("19", "adele");
         ArrayList<String> result = testModel.getAlbums();
         Assert.assertEquals(1, result.size());
+    }
+
+    @Test
+    public void testRemoveSong() {
+        testModel.addAlbumToLibrary("19", "adele");
+        String result = testModel.removeSong("tired", "adele");
+        Assert.assertEquals(true, !(result.equals("Unable to remove song")));
+    }
+
+    @Test
+    public void testRemoveAlbum() {
+        testModel.addAlbumToLibrary("19", "adele");
+        String result = testModel.removeAlbum("19", "adele");
+        Assert.assertEquals(true, !(result.equals("Unable to remove album")));
+    }
+
+    @Test
+    public void testShuffleLibrary() {
+        testModel.addAlbumToLibrary("19", "adele");
+        String result = testModel.shuffleLibrary();
+        Assert.assertEquals("Successfully shuffled library", result);
+    }
+
+    @Test
+    public void testShufflePlaylist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        testModel.playASong("tired", "adele");
+        String result = testModel.shufflePlaylist("frequently played");
+        Assert.assertEquals(true, !(result.contains("Unable to find playlist:")));
+    }
+
+    @Test
+    public void testAlbumOfSong() {
+        testModel.addAlbumToLibrary("19", "adele");
+        String result = testModel.albumOfSong("tired", "adele");
+        Assert.assertEquals(true, !(result.equals("")));
+    }
+
+    @Test
+    public void testShufflePlaylistWhenNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        testModel.playASong("tired", "adele");
+        String result = testModel.shufflePlaylist("blah not a playlist");
+        Assert.assertEquals(false, !(result.contains("Unable to find playlist:")));
+    }
+
+    @Test
+    public void testRemoveAlbumWhenArtistHasTwoAlbums() {
+        testModel.addAlbumToLibrary("19", "adele");
+        testModel.addAlbumToLibrary("21", "adele");
+        String result = testModel.removeAlbum("19", "adele");
+        Assert.assertEquals(true, !(result.equals("Unable to remove album")));
+    }
+
+    @Test
+    public void testRemoveAlbumWhenAlbumNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        testModel.addAlbumToLibrary("21", "adele");
+        String result = testModel.removeAlbum("NOT A REAL ALBUM", "adele");
+        Assert.assertEquals(true, (result.equals("Unable to remove album")));
+    }
+
+    @Test
+    public void testRemoveAlbumWhenArtistNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        testModel.addAlbumToLibrary("21", "adele");
+        String result = testModel.removeAlbum("19", "NOT A REAL ARTIST");
+        Assert.assertEquals(true, (result.equals("Unable to remove album")));
+    }
+
+    @Test
+    public void testAlbumOfSongWhenSongHasTwoArtists() {
+        testModel.addAlbumToLibrary("waking up", "onerepublic");
+        testModel.addAlbumToLibrary("old ideas", "leonard cohen");
+        String result = testModel.albumOfSong("lullaby", "leonard cohen");
+        Assert.assertEquals(true, !(result.equals("")));
+    }
+
+    @Test
+    public void testAlbumOfSongWhenSongNotExist() {
+        String result = testModel.albumOfSong("song not exist", "not an artist");
+        Assert.assertEquals("", result);
+    }
+
+    @Test
+    public void testRemoveSongAfterPlaying() {
+        testModel.addAlbumToLibrary("19", "adele");
+        testModel.playASong("tired", "adele");
+        testModel.playASong("tired", "adele");
+        testModel.updateFrequentlyPlayedList("tired", "adele");
+        String result = testModel.removeSong("tired", "adele");
+        Assert.assertEquals(true, !(result.equals("Unable to remove song")));
+    }
+
+    @Test
+    public void testRemoveSongIfSongNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        String result = testModel.removeSong("not a song", "adele");
+        Assert.assertEquals(true, (result.equals("Unable to remove song")));
+    }
+
+    @Test
+    public void testRemoveSongAfterFavoriting() {
+        testModel.addAlbumToLibrary("19", "adele");
+        testModel.favoriteASong("tired", "adele");
+        String result = testModel.removeSong("tired", "adele");
+        Assert.assertEquals(true, !(result.equals("Unable to remove song")));
+    }
+
+    @Test
+    public void testRemoveSongMultipleSameName() {
+        testModel.addAlbumToLibrary("waking up", "onerepublic");
+        testModel.addAlbumToLibrary("old ideas", "leonard cohen");
+        String result = testModel.removeSong("lullaby", "leonard cohen");
+        Assert.assertEquals(true, !(result.equals("Unable to remove song")));
     }
 
     @Test
