@@ -4,6 +4,7 @@ import src.store.Album;
 import src.store.MusicStore;
 import src.store.Song;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class LibraryModel {
@@ -24,6 +25,9 @@ public class LibraryModel {
     // Used to keep track of songs by genre
     private final HashMap<String, Playlist> genreTracker;
 
+    // Used to build up partial albums
+    private final HashMap<String, Album> partialAlbums;
+
     /*=============================================================================================
      *
      * Constructors
@@ -39,6 +43,7 @@ public class LibraryModel {
         this.albumsByTitle = new HashMap<String, ArrayList<Album>>();
         this.albumsByArtist = new HashMap<String, ArrayList<Album>>();
         this.genreTracker = new HashMap<String, Playlist>();
+        this.partialAlbums = new HashMap<String, Album>();
 
         this.playlists = new HashMap<String, Playlist>();
 
@@ -322,6 +327,17 @@ public class LibraryModel {
         return returnLst;
     }
 
+    public ArrayList<Song> getSongsByGenre(String genre) {
+        genre = genre.toLowerCase();
+        ArrayList<Song> ret = new ArrayList<Song>();
+        if (this.genreTracker.containsKey("genre:"+genre)) {
+            for (Song song : this.genreTracker.get("genre:"+genre).getSongs()) {
+                ret.add(new Song(song));
+            }
+        }
+        return ret;
+    }
+
     /*=============================================================================================
      *
      * Methods
@@ -367,12 +383,12 @@ public class LibraryModel {
             }
         }
         if (foundAlbum != null) {
-            if (!this.genreTracker.containsKey("genre:"+foundAlbum.getGenre())) {
-                this.genreTracker.put("genre:"+foundAlbum.getGenre(), new Playlist("genre:"+foundAlbum.getGenre()));
+            if (!this.genreTracker.containsKey("genre:" + foundAlbum.getGenre().toLowerCase())) {
+                this.genreTracker.put("genre:" + foundAlbum.getGenre().toLowerCase(), new Playlist("genre:" + foundAlbum.getGenre()));
             }
-            this.genreTracker.get("genre:"+foundAlbum.getGenre()).addSong(found);
-            if (this.genreTracker.get("genre:"+foundAlbum.getGenre()).getSongs().size() >= 10 && !this.playlists.containsKey("genre:"+foundAlbum.getGenre())) {
-                this.playlists.put("genre:"+foundAlbum.getGenre(), this.genreTracker.get("genre:"+foundAlbum.getGenre()));
+            this.genreTracker.get("genre:" + foundAlbum.getGenre().toLowerCase()).addSong(found);
+            if (this.genreTracker.get("genre:" + foundAlbum.getGenre().toLowerCase()).getSongs().size() >= 10 && !this.playlists.containsKey("genre:" + foundAlbum.getGenre().toLowerCase())) {
+                this.playlists.put("genre:" + foundAlbum.getGenre().toLowerCase(), this.genreTracker.get("genre:" + foundAlbum.getGenre().toLowerCase()));
             }
         }
 
