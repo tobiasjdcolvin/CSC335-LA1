@@ -367,7 +367,6 @@ public class LibraryModel {
             }
         }
         if (foundAlbum != null) {
-            this.addAlbumToLibraryOnlyCurrent(foundAlbum.getTitle().toLowerCase(), foundAlbum.getArtist().toLowerCase());
             if (!this.genreTracker.containsKey("genre:"+foundAlbum.getGenre())) {
                 this.genreTracker.put("genre:"+foundAlbum.getGenre(), new Playlist("genre:"+foundAlbum.getGenre()));
             }
@@ -825,10 +824,6 @@ public class LibraryModel {
                 this.songTitlesList.add(title);
             }
         }
-    }
-
-    private void addAlbumToLibraryOnlyCurrent(String alName, String artName) {
-        // TODO HERE
     }
 
     public String shufflePlaylist(String playlistName) {
