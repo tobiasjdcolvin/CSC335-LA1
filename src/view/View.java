@@ -5,6 +5,7 @@ import java.util.Scanner;
 import src.model.LibraryModel;
 import src.model.UserModel;
 import src.store.MusicStore;
+import src.store.Song;
 
 public class View {
     public static void start(UserModel modelArg) {
@@ -52,6 +53,7 @@ public class View {
                 'shuffle library': shuffles all of the songs in your library
                 'shuffle playlist': shuffles the songs in a specified playlist in your library
                 'album of song': get the album information of a song in your library
+                'get songs by genre': get all songs of a given genre
                 ---------------------------------------------------------------
                 SPECIAL PLAYLISTS:
                 'recently played': A playlist of recently played songs
@@ -547,6 +549,19 @@ public class View {
                     String result = model.removeAlbum(userResponse1, userResponse2);
                     System.out.println(result);
 
+                } else {
+                    System.out.println("Please login");
+                }
+            }else if (userInput.equals("get songs by genre")) {
+                if (model.getLoggedIn()) {
+                    System.out.println("Enter the genre:");
+                    String userResponse1 = scanner.nextLine();
+                    ArrayList<Song> result = model.getSongsByGenre(userResponse1);
+                    if (result.isEmpty()) {
+                        System.out.println("No songs found for genre " + userResponse1);
+                    } else {
+                        result.forEach(System.out::println);
+                    }
                 } else {
                     System.out.println("Please login");
                 }

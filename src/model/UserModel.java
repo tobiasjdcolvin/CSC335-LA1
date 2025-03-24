@@ -176,6 +176,10 @@ public class UserModel {
         return this.currUser.getAlbumsByArtistFromStore(input);
     }
 
+    public ArrayList<Song> getSongsByGenre(String genre) {
+        return this.currUser.getSongsByGenre(genre);
+    }
+
     public ArrayList<String> getSongsByTitle(String input) {
         return this.currUser.getSongsByTitle(input);
     }
