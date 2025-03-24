@@ -19,10 +19,32 @@ public class LibraryModelTest {
     }
 
     @Test
+    public void testAddToLibraryIfSongNotExist() {
+        Assert.assertFalse(testModel.addSongToLibrary("NOT A SONG", "Leonard Cohen"));
+    }
+
+    @Test
+    public void testAddToLibraryIfArtistNotExist() {
+        Assert.assertFalse(testModel.addSongToLibrary("Banjo", "NOT AN ARTIST"));
+    }
+
+    @Test
     public void testGetSongTitles() {
         testModel.addSongToLibrary("Tired", "Adele");
         testModel.addSongToLibrary("Secrets", "OneRepublic");
         Assert.assertEquals(2, testModel.getSongTitles().size());
+    }
+
+    @Test
+    public void testGetSongsByGenre() {
+        testModel.addAlbumToLibrary("19", "adele");
+        Assert.assertEquals(12, testModel.getSongsByGenre("pop").size());
+    }
+
+    @Test
+    public void testGetSongsByGenreWhenNotExist() {
+        testModel.addAlbumToLibrary("19", "adele");
+        Assert.assertEquals(0, testModel.getSongsByGenre("NOT A GENRE").size());
     }
 
     @Test
