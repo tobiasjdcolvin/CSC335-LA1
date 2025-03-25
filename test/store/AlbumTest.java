@@ -36,6 +36,24 @@ public class AlbumTest {
         Assert.assertEquals(song.getTitle(), album.getSongs().getFirst().getTitle());
     }
 
+    @Test
+    public void testRemoveSongNone() {
+        album.removeSong("Never gonna give you up", "Rick Astley");
+        Assert.assertTrue(album.getSongs().isEmpty());
+    }
 
+    @Test
+    public void testRemoveSongSome() {
+        album.addSong(new Song("Never gonna give you up", "Rick Astley", "Fortnite Battle Pass"));
+        album.removeSong("Never gonna give you up", "Rick Astley");
+        Assert.assertTrue(album.getSongs().isEmpty());
+    }
 
+    @Test
+    public void testRemoveSongSomeNone() {
+        album.addSong(new Song("Never gonna give you up", "Rick Astley", "Fortnite Battle Pass"));
+        album.addSong(new Song("Never gonna give you up2", "Rick Astley2", "Fortnite Battle Pass2"));
+        album.removeSong("Never gonna give you up", "Rick Astley");
+        Assert.assertFalse(album.getSongs().isEmpty());
+    }
 }
