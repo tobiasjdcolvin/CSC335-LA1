@@ -657,6 +657,7 @@ public class LibraryModel {
             if (songsByTitle.get(title).size() == 1) {
                 if (songsByTitle.get(title).get(0).getArtist().toLowerCase().equals(artist)) {
                     songsByTitle.remove(title);
+                    songTitlesList.remove(title);
                 } else {
                     return "Unable to remove song";
                 }
