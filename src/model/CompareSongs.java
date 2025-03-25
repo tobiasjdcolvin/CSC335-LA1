@@ -14,10 +14,10 @@ public class CompareSongs implements Comparator {
         if (songa.getPlays() < songb.getPlays()) {
             return 1; // song1 has less plays than song2
         }
-        if (songa.getPlays() > songb.getPlays()) {
+        else if (songa.getPlays() > songb.getPlays()) {
             return -1; // song1 has more plays than song2
         }
-        return 0; // both songs have the same abount of plays
+        return 0; // both songs have the same amount of plays
     }
 
 }
