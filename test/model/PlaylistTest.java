@@ -17,9 +17,39 @@ public class PlaylistTest {
     }
 
     @Test
+    public void testAddMultiple() {
+        playlist.addSong(new Song("My Mathematical Romance","Shaun McGonagal","Life"));
+        playlist.addSong(new Song("My arm","Shaun McGonagal","Life"));
+        Assert.assertEquals("Life", playlist.getSongs().getFirst().getAlbum());
+    }
+
+    @Test
+    public void testAddDuplicate() {
+        playlist.addSong(new Song("My Mathematical Romance","Shaun McGonagal","Life"));
+        playlist.addSong(new Song("My Mathematical Romance","Shaun McGonagal","Life"));
+        playlist.addSong(new Song("My arm","Shaun McGonagal","Life"));
+        Assert.assertEquals("Life", playlist.getSongs().getFirst().getAlbum());
+    }
+
+    @Test
+    public void testMultipleDiffArtist() {
+        playlist.addSong(new Song("My Mathematical Romance","Shaun McGonagal","Life"));
+        playlist.addSong(new Song("My Mathematical Romance","man","Life"));
+        Assert.assertEquals("Life", playlist.getSongs().getFirst().getAlbum());
+    }
+    
+
+    @Test
     public void testRemove() {
         Song song = new Song("My Mathematical Romance","Shaun McGonagal","Life");
         playlist.addSong(song);
+        playlist.removeSong(song);
+        Assert.assertTrue(playlist.getSongs().isEmpty());
+    }
+
+    @Test
+    public void testRemoveIfNotExist() {
+        Song song = new Song("My Mathematical Romance","Shaun McGonagal","Life");
         playlist.removeSong(song);
         Assert.assertTrue(playlist.getSongs().isEmpty());
     }
@@ -29,5 +59,12 @@ public class PlaylistTest {
         Song song = new Song("My Mathematical Romance","Shaun McGonagal","Life");
         playlist.addSong(song);
         Assert.assertEquals("Playlist: Squib Gams\nMy Mathematical Romance - Shaun McGonagal\n", playlist.toString());
+    }
+
+    @Test
+    public void testShuffle() {
+        Song song = new Song("blah", "bhl", "bbbbb");
+        playlist.addSong(song);
+        playlist.shuffle();
     }
 }
