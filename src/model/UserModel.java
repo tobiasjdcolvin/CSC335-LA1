@@ -82,7 +82,7 @@ public class UserModel {
                 // PrintWriter allows you to use familiar methods like print and println
                 PrintWriter myprintwriter = new PrintWriter(mybufferedwriter))
             {
-                String myString = username + " " + hash(password + salt) + " " + salt; // TODO: Add hashing here
+                String myString = username + " " + hash(password + salt) + " " + salt;
                 myprintwriter.print("\n");
                 myprintwriter.print(myString);
             } catch (IOException exception) {
@@ -115,7 +115,7 @@ public class UserModel {
     // login as a registered user
     public String login(String username, String password) {
         if (userPasswords.containsKey(username)) {
-            if (passwordCheck(username, password)) { // TODO: Add hashing here
+            if (passwordCheck(username, password)) {
                 currUser = users.get(username);
                 return "Successfully logged in as " + username;
             } else {
