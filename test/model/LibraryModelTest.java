@@ -240,17 +240,17 @@ public class LibraryModelTest {
     @Test
     public void testUpdateFrequentlyPlayedList() {
         testModel.addAlbumToLibrary("19", "adele");
-        boolean firstPlayResult = testModel.playASong("tired", "adele");
-        ArrayList<String> firstUpdateResult = testModel.updateFrequentlyPlayedList("tired", "adele");
-        boolean secondPlayResult = testModel.playASong("tired", "adele");
-        ArrayList<String> secondUpdateResult = testModel.updateFrequentlyPlayedList("tired", "adele");
-        Assert.assertEquals(true, firstPlayResult);
-        Assert.assertEquals(true, secondPlayResult);
-        Assert.assertEquals(true, firstUpdateResult != null);
-        Assert.assertEquals(true, firstUpdateResult.size() > 0);
-        Assert.assertEquals(true, secondUpdateResult != null);
-        Assert.assertEquals(true, secondUpdateResult.size() > 0);
-        Assert.assertEquals(true, firstUpdateResult.contains("tired by adele"));
+        boolean result1 = testModel.playASong("tired", "adele");
+        ArrayList<String> updateResult1 = testModel.updateFrequentlyPlayedList("tired", "adele");
+        boolean result2 = testModel.playASong("tired", "adele");
+        ArrayList<String> updateResult2 = testModel.updateFrequentlyPlayedList("tired", "adele");
+        Assert.assertEquals(true, result1);
+        Assert.assertEquals(true, result2);
+        Assert.assertEquals(true, updateResult1 != null);
+        Assert.assertEquals(true, updateResult1.size() > 0);
+        Assert.assertEquals(true, updateResult2 != null);
+        Assert.assertEquals(true, updateResult2.size() > 0);
+        Assert.assertEquals(true, updateResult1.contains("tired by adele"));
     }
 
     @Test
